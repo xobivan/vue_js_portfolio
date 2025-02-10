@@ -1,3 +1,9 @@
+# Ignore all JSON files
+*.json
+
+# But keep package.json
+!package.json
+
 # System files
 .DS_Store
 
