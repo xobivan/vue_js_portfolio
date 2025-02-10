@@ -42,3 +42,7 @@ pnpm-debug.log*
 # Firebase & Google Cloud
 /firebase-debug.log
 /.firebase/
+/dataconnect
+/dataconnect-generated
+apphosting.yaml*
+firestore.rules*
