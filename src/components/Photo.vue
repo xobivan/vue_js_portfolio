@@ -1,8 +1,14 @@
+<script setup>
+    import {defineProps} from "vue"
+    const props = defineProps({
+        photo: String,
+    })
+</script>
 <template>
   <div>
     <div class="photo">
         <a>
-            <img src="../assets/img/photo.jpg" alt="photo"/>
+            <img v-if="photo" :src="props.photo" alt="Profile picture" />
         </a>
     </div>
   </div>
@@ -10,12 +16,12 @@
 
 <script>
 
-
 export default {
     name: 'Photo',
-    props: ['user', 'photo'],
 }
+
 </script>
+
 
 <style scoped lang="scss">
     .photo {

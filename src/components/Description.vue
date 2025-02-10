@@ -1,3 +1,10 @@
+<script setup>
+    import {defineProps} from 'vue';
+    const props = defineProps({
+        photo: String,
+    })
+</script>
+
 <template>
     <section id="about">
         <AnimateOnVisible name="fadeDown" :duration="1">
@@ -8,11 +15,11 @@
             <div class="section-content">
                 <div class="container-fluid">
                     <div class="row justify-content-center card-mobile">
-                        <Photo :user="user"/>
+                        <Photo :photo = "props.photo"/>
                     </div>
                     <div class="row">
                         <div class="col-md-7 mr-auto card-mobile">
-                            <Presentation :content="content"/>
+                            <Presentation />
                         </div>
                         <div class="col-md-4 card-mobile">
                             <PersonalCard :user="user" :links="links"/>
@@ -25,18 +32,11 @@
 </template>
 
 <script>
+
+    import Photo from "./Photo.vue";
     import Title from './Title.vue'
     import PersonalCard from './PersonnalCard.vue'
     import Presentation from './Presentation.vue'
-    import Photo from './Photo.vue'
-
-/*     import { getFirestore, doc } from "firebase/firestore";
-    const firetore = getFirestore();
-
-    const img = doc(firetore, 'images/8h9AjA7TuZUcISLWngUo');
-
-    console.log(img)
- */
     export default {
         name: 'AboutMe',
         components: {
@@ -49,7 +49,6 @@
         data(){
             return{
                 user: "Dmitry Spivak",
-                photo:[],
                 links:{
                     gitHub:"https://github.com/",
                     linkedIn:"https://www.linkedin.com/",

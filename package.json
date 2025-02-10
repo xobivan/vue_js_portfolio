@@ -14,15 +14,16 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/vue-fontawesome": "^3.0.2",
     "@growthbunker/vuetimeline": "^0.1.17",
+    "@vue/compiler-sfc": "^3.5.13",
     "bootstrap-vue": "^2.23.1",
     "core-js": "^3.8.3",
-    "firebase": "^9.20.0",
+    "firebase": "^9.23.0",
     "firebase-admin": "^11.4.0",
     "flamelink": "^1.0.0-rc.2",
-    "vue": "^3.2.45",
+    "vue": "^3.5.13",
     "vue2-animate": "^2.1.4",
     "vue3-transitions": "^1.0.0",
-    "vuefire": "^3.1.0"
+    "vuefire": "^3.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

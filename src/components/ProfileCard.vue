@@ -1,5 +1,12 @@
+<script setup>
+  import {defineProps} from "vue";
+  const props = defineProps({
+    background: String, 
+  })
+</script>
 <template>
-  <header class="header parallax">
+  
+  <header class="header parallax" :style="{ backgroundImage: `url(${props.background})`}">
     <div class="name">
       <div class="wrapper-name">
         <animate-on-visible name="fadeRight" ::duration="1">
@@ -7,7 +14,7 @@
         </animate-on-visible>
         <hr />
         <animate-on-visible name="fadeLeft" ::duration="1">
-          <p>Front-End Developer</p>
+          <p>Software Engineer</p>
         </animate-on-visible>
       </div>
     </div>
@@ -36,7 +43,6 @@ export default {
 
 .parallax {
 
-  background-image: url("../assets/img/bg.png");
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
