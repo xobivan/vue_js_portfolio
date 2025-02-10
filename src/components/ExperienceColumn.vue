@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h3 class="color-light">{{ title }}</h3>
-    <div class="resume-item" v-for=" (post, index) in posts" :key="index">
-      <div class="year color-darker">{{ post.year }}</div>
+    <h3 class="color-light"></h3>
+    <div class="resume-item">
+      <div class="year color-darker"></div>
       <div class="resume-description">
         <strong class="color-light" v-html="title"></strong>
       </div>
@@ -12,8 +12,6 @@
 </template>
 
 <script>
-
-/* import {db, storage} from '../firebase/get-content' */
 
 export default {
   name: "ExperienceColumn",

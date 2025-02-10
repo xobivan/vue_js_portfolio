@@ -12,12 +12,10 @@
 		<div class="container-fluid">
 			<div class="row">
 				<ExperienceColumn
-					:posts="content.metadata.academic"
 					title="Education"
 					class="col-12 col-md left"
 				/>
 				<ExperienceColumn
-					:posts="content.metadata.professional"
 					title="Professional"
 					class="col-12 col-md right"
 				/>
@@ -33,7 +31,6 @@ import ExperienceColumn from "./ExperienceColumn.vue";
 
 export default {
   name: "Experience",
-  props: ["content"],
   components: {
     Title,
     ExperienceColumn

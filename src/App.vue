@@ -1,7 +1,14 @@
 <script setup>
-  import { ref, onMounted, provide} from "vue";
+  import { ref, onMounted, provide, nextTick} from "vue";
   import { getStorage, ref as storageRef, listAll, getDownloadURL } from "firebase/storage";
   import { firebaseApp } from "./firebase/db.js";
+  import ProfileCard from"./components/ProfileCard.vue";
+  import Description from "./components/Description.vue";
+  import TheExperience from './components/TheExperience.vue';
+  import Skills from "./components/Skills.vue";
+
+  const user = ref("Dmitry Spivak");
+  const isLoaded = ref(false);
 
   const storage = getStorage(firebaseApp);
 
@@ -39,6 +46,9 @@
   }
   
   onMounted(async()=>{
+    isLoaded.value = true;
+    await nextTick();
+    document.body.classList.remove("loading");
     await fetchBio();
     await fetchIcons();
     await fetchProfilePictures();
@@ -58,32 +68,6 @@
   </transition>
 </template>
 
-<script>
-import ProfileCard from"./components/ProfileCard.vue";
-import Description from "./components/Description.vue";
-import TheExperience from './components/TheExperience.vue';
-import Skills from "./components/Skills.vue";
-
-export default{
-  components:{
-    ProfileCard,
-    Description,
-    TheExperience,
-    Skills
-  },
-  data(){
-
-    return{
-      isLoaded: false,
-      user: "Dmitry Spivak",
-    }
-  },
-  created(){
-    this.isLoaded = true;
-    this.$nextTick(() => document.body.classList.remove("loading"));
-  },
-}
-</script>
 
 <style scoped lang="scss">
 @import "./styles/constants.scss";

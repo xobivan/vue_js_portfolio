@@ -17,7 +17,7 @@
             <div class="container-fluid">
                 <div class="row d-flex flex-wrap align-items-center">
                     <div v-if="!images || images.length === 0">Loading images...</div>
-                    <div v-else class="col-md-2 m-auto pb-4" v-for="(image, index) in props.images" :key="index">
+                    <div v-else class="col-6 col-md-2 m-auto pb-4" v-for="(image, index) in props.images" :key="index">
                         <AnimateOnVisible name="bounce">
                                 <img id="imgLogo" class="img-responsive mx-auto d-block" :src="image" alt="Images"/>
                         </AnimateOnVisible>
@@ -53,7 +53,7 @@
 
     @media(min-width: #{map-get($breakpoints, medium)}) {
         .section-content {
-            width: 80%;
+            width:90%;
             margin: 0 auto;
         }
     }
