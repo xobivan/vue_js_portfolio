@@ -7,6 +7,7 @@
         <strong class="color-light" v-html="title"></strong>
       </div>
       <div class="color-darker" v-html="content"></div>
+      <div class = "year">2020</div>
     </div>
   </div>
 </template>

@@ -15,12 +15,11 @@ const firebaseConfig = {
   storageBucket: "dmitry-spivak-portfolio.appspot.com",
   messagingSenderId: "453158869926",
   appId: "1:453158869926:web:30507a2a0e50abc8ea0d67",
-  measurementId: "G-HR0S9B9BFR"
+  measurementId: "G-HR0S9B9BFR",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
 
-
-export{db}
+export{db};

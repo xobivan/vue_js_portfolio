@@ -1,7 +1,8 @@
 <script setup>
   import {defineProps} from "vue";
   const props = defineProps({
-    background: String, 
+    background: String,
+    user: String,
   })
 </script>
 <template>
@@ -10,7 +11,7 @@
     <div class="name">
       <div class="wrapper-name">
         <animate-on-visible name="fadeRight" ::duration="1">
-          <h1>{{user}}</h1>
+          <h1>{{ user }}</h1>
         </animate-on-visible>
         <hr />
         <animate-on-visible name="fadeLeft" ::duration="1">
@@ -21,17 +22,6 @@
   </header>
 </template>
 
-<script>
-export default {
-  name: 'ProfileCard',
-
-  data(){
-    return{
-      user: "Dmitry Spivak",
-    }
-  },
-}
-</script>
 
 <style scoped lang="scss">
 @import "@/styles/constants.scss";

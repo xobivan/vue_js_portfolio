@@ -1,21 +1,20 @@
+<script setup>
+
+  import { defineProps } from 'vue';
+  const props = defineProps({
+    title: String,
+    description: String,
+  })
+</script>
+
 <template>
     <div class="title">
-      <h2>{{ title }}</h2>
+      <h2>{{ props.title }}</h2>
       <div class="wrapper">
-        <div class="text-wrapper">{{ description }}</div>
+        <div class="text-wrapper">{{ props.description }}</div>
       </div>
     </div>
 </template>
-
-<script>
-  export default {
-    name: 'Title',
-    props: [
-      'title',
-      'description'
-    ]
-  }
-</script>
 
 <style scoped lang="scss">
   @import '@/styles/constants.scss';

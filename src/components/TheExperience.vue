@@ -1,11 +1,7 @@
 <template>
   <section id="experience">
     <AnimateOnVisible name="fadeDown" :duration="1">
-      <Title
-        class="title"
-        :title="title"
-        :description="description"
-      />
+      <Title class="title" :title="title" :description="descritption"/>
     </AnimateOnVisible>
 
 	<AnimateOnVisible name="fadeUp" :duration="1">
@@ -38,7 +34,7 @@ export default {
   data(){
     return{
       title:"Experience",
-      descritption:"exp description",
+      descritption:"My achievements",
 
     }
   }

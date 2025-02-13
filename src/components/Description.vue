@@ -1,14 +1,20 @@
 <script setup>
     import {defineProps} from 'vue';
+    import Photo from "./Photo.vue";
+    import Title from './Title.vue'
+    import PersonalCard from './PersonnalCard.vue'
+    import Presentation from './Presentation.vue'
     const props = defineProps({
         photo: String,
+        links: Object,
+        user: String,
     })
 </script>
 
 <template>
     <section id="about">
         <AnimateOnVisible name="fadeDown" :duration="1">
-            <Title :title="title" :description="description" />
+            <Title :title="title" :description = "description"/>
         </AnimateOnVisible>
 
         <AnimateOnVisible name="fadeRight" :duration="1">
@@ -33,30 +39,13 @@
 
 <script>
 
-    import Photo from "./Photo.vue";
-    import Title from './Title.vue'
-    import PersonalCard from './PersonnalCard.vue'
-    import Presentation from './Presentation.vue'
+
     export default {
-        name: 'AboutMe',
-        components: {
-            Title,
-            PersonalCard,
-            Presentation,
-            Photo
-        },
 
         data(){
             return{
-                user: "Dmitry Spivak",
-                links:{
-                    gitHub:"https://github.com/",
-                    linkedIn:"https://www.linkedin.com/",
-                    instagram:"https://www.instagram.com/"
-                },
                 title: 'About Me',
-                description:"WHO I AM",
-                content:'here is content',
+                description: 'WHO I AM'
             }
         },
     }

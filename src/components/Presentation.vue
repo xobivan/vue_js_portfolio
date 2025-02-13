@@ -1,12 +1,12 @@
 <script setup>
   import { inject } from "vue";
-  const bioText = inject("bio");
+  const bioText = inject("userStore");
 </script>
 
 <template>
   <div class="paragraph">
     <h3>LET ME INTRODUCE MYSELF</h3>
-    <div v-if="bioText" class="begin">{{ bioText }}</div>
+    <div v-if="bioText" class="begin">{{ bioText.bio }}</div>
     <div v-else>Failed to load description</div>
   </div>
 </template>
