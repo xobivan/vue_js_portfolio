@@ -1,13 +1,18 @@
 <template>
+  
   <div>
     <h3 class="color-light"></h3>
     <div class="resume-item">
       <div class="year color-darker"></div>
       <div class="resume-description">
-        <strong class="color-light" v-html="title"></strong>
+        <strong class="color-light"v-html="title"></strong>
       </div>
-      <div class="color-darker" v-html="content"></div>
-      <div class = "year">2020</div>
+        <br></br>
+        <a :href="url" target="_blank" rel="noopener noreferrer">
+            <strong class="color-light" v-html="name"></strong>
+          <div class="color-darker" v-html="content"></div>
+          <div class = "year" v-html="date"></div>
+      </a>
     </div>
   </div>
 </template>
@@ -21,9 +26,21 @@ export default {
       type: String,
       required: true
     },
+    name: {
+      type: String,
+      required: true
+    },
     content: {
       type: String,
       required: true
+    },
+    date: {
+      type: String,
+      required: false,
+    },
+    url:{
+      type: String,
+      required: true,
     }
   },
 };
@@ -51,5 +68,9 @@ export default {
 }
 .color-darker {
   color: map-get($colors, dark);
+}
+a {
+  text-decoration: none;
+  
 }
 </style>

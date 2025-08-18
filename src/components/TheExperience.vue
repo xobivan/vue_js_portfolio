@@ -14,6 +14,12 @@
 				<ExperienceColumn
 					title="Professional"
 					class="col-12 col-md right"
+          v-for="(repo, index) in repos"
+          :key="index"
+          :name="repo.name"
+          :content="repo.description || 'No description available'"
+          :date="new Date(repo.created_at).getFullYear()"
+          :url="repo.html_url"
 				/>
 			</div>
 		</div>
@@ -27,6 +33,12 @@ import ExperienceColumn from "./ExperienceColumn.vue";
 
 export default {
   name: "Experience",
+  props: {
+    repos: {
+      type: Array,
+      required: true
+    }
+  },
   components: {
     Title,
     ExperienceColumn
