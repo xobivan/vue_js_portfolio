@@ -16,13 +16,16 @@
 
 export default {
   name: "ExperienceColumn",
-
-  data(){
-    return{
-      title:'exp name',
-      content:'exp desc',
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    content: {
+      type: String,
+      required: true
     }
-  }
+  },
 };
 </script>
 
