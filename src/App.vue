@@ -2,7 +2,7 @@
   import { ref, onMounted, provide, nextTick} from "vue";
   import { getStorage, ref as storageRef, listAll, getDownloadURL } from "firebase/storage";
   import { doc, getDoc } from "firebase/firestore";
-  import { firebaseApp, db } from "./firebase/db.js";
+  import { app, db } from "./firebase/db.js";
   import ProfileCard from"./components/ProfileCard.vue";
   import Description from "./components/Description.vue";
   import TheExperience from './components/TheExperience.vue';
@@ -10,7 +10,7 @@
 
   const isLoaded = ref(false);
 
-  const storage = getStorage(firebaseApp);
+  const storage = getStorage(app);
   const images = ref([]);
   const photo = ref();
   const backgroundImage = ref();
