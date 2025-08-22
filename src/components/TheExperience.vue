@@ -19,13 +19,15 @@
             :loop="true"
             :grabCursor="true"
             :centeredSlides="true"
-            :slidesPerView="'auto'"      
+            :slidesPerView="'auto'"     
             :coverflowEffect="{
               rotate: 50,
               stretch: 0,
               depth: 100,
               modifier: 1,
+              slideShadows: false
             }"
+            
             :breakpoints="{
               430: {
                 slidesPerView: 1,
@@ -75,6 +77,7 @@ import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination'; 
 import { EffectCoverflow, Pagination, Mousewheel } from 'swiper/modules';
+import { fa } from "vuetify/locale";
 
 
 export default {
