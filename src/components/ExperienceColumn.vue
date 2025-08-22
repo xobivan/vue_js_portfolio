@@ -8,7 +8,7 @@
       id="card">  
     <b-row no-gutters>
       <b-col md="6">
-        <b-card-img :src="`https://opengraph.githubassets.com/1/${owner}/${name}`" alt="Image" class="rounded-0"/>     
+        <b-card-img :src="src" alt="Image" class="rounded-0"/>     
       </b-col>
       <b-col md="6">
         <b-card-body :title="name">
