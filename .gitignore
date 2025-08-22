@@ -4,6 +4,7 @@
 # But keep package.json
 !package.json
 !package-lock.json
+!firebase.json
 
 # System files
 .DS_Store
