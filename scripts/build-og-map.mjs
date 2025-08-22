@@ -63,7 +63,7 @@ for (const repo of repos) {
 }
 
 // Отсортируем ключи (удобнее глазами)
-const sorted = Object.fromEntrsies(Object.entries(out).sort());
+const sorted = Object.fromEntries(Object.entries(out).sort());
 
 await fs.mkdir("public", { recursive: true });
 await fs.writeFile("public/og-map.json", JSON.stringify(sorted, null, 2));
