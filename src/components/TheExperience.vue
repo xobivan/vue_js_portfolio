@@ -49,6 +49,8 @@
               :date="new Date(repo.created_at).getFullYear()"
               :url="repo.html_url"
               :owner="repo.owner.login"
+              :src="repo.socialPreview"
+              :alt="repo.name"
             />
           </swiper-slide>
         </swiper>

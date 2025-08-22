@@ -51,7 +51,18 @@
       owner: {
         type: String,
         required: true,
-      }
+      },
+      src: {
+        type: String,
+        required: false,
+        default: ''
+      },
+      alt: {
+        type: String,
+        required: false,
+        default: ''
+      },
+
     },
   };
 </script>
