@@ -1,4 +1,4 @@
-<template>>
+<template>
   <section id="experience">
     <AnimateOnVisible name="fadeDown" :duration="1">
       <Title class="title" :title="title" :description="descritption"/>
