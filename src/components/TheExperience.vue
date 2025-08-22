@@ -14,21 +14,28 @@
       <div class="row">
         <Title class="container px-4 text-center" :title="visibleGrid"></Title>
           <swiper
-            :loop="true"
             :effect="'coverflow'"
+            :mousewheel="true"
+            :loop="true"
             :grabCursor="true"
             :centeredSlides="true"
-            :slidesPerView="'3'"
+            :slidesPerView="'auto'"      
             :coverflowEffect="{
               rotate: 50,
               stretch: 0,
               depth: 100,
               modifier: 1,
-              slideShadows: false,
             }"
-            :pagination="true"
+            :breakpoints="{
+              430: {
+                slidesPerView: 1,
+                pagination:true,
+              },
+              768: {slidesPerView: 2,},
+              1024: {slidesPerView: 3,},
+            }"
             :modules="modules"
-            style="width: 70%; height:100%"
+            style="max-width: max-content;  width: 75%; height:100%"
             class="mySwiper">
           <swiper-slide
             v-if="visibleGrid==='Education'"
@@ -41,10 +48,10 @@
               v-if="visibleGrid === 'Professional'"
               v-for="(repo, index) in repos"
               :key="index"
-              class="col-12 col-md-6 d-flex justify-content-center align-items-center">
+              class="col-12 col-md-6 d-flex justify-content-around align-items-center">
             <ExperienceColumn
               class="col-12 col-md right"
-              :name="repo.name"
+              :name="repo.name.replace(/-/g, ' ')"
               :content="repo.description || 'No description available'"
               :date="new Date(repo.created_at).getFullYear()"
               :url="repo.html_url"
@@ -67,16 +74,14 @@ import '@/styles/slider.css';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination'; 
-import { EffectCoverflow, Pagination } from 'swiper/modules';
+import { EffectCoverflow, Pagination, Mousewheel } from 'swiper/modules';
 
 
 export default {
   name: "Experience",
+
   props: {
-    repos: {
-      type: Array,
-      required: true
-    }
+    repos: {type: Array,required: true}
   },
   components: {
     Title,
@@ -86,7 +91,7 @@ export default {
   },
   setup() {
     return {
-      modules: [EffectCoverflow, Pagination],
+      modules: [EffectCoverflow, Pagination, Mousewheel],
     };
   },
   data(){
@@ -139,7 +144,7 @@ $linear: map-get($colors, dark);
     height  : 2px;
     width   : 60%;  /* or 100px */
     border-bottom:2px solid $linear;
-}
+  }
 }
 
 .text-wrapper {
