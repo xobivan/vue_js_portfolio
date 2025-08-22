@@ -1,0 +1,42 @@
+name: Build OG + Deploy to Firebase
+
+on:
+  push:
+    branches: [ main ]    # или твоя ветка
+  workflow_dispatch:
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # 1) Генерим og-map.json (ВАЖНО: скрипт в корне репо сайта!)
+      - name: Generate og-map.json
+        run: node scripts/build-og-map.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 2) Устанавливаем зависимости и билдим фронт
+      - name: Install deps
+        run: npm ci
+      - name: Build
+        run: npm run build
+        # для Vite: "build" создаёт "dist/"
+        # для Vue CLI: "build" создаёт "dist/"
+
+      # 3) Деплой на Firebase Hosting
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          channelId: live
+          projectId: your-firebase-project-id
+        # По умолчанию action подхватит "firebase.json" и задеплоит "public" или "dist"
