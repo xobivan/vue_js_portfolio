@@ -47,3 +47,4 @@ pnpm-debug.log*
 /dataconnect-generated
 apphosting.yaml*
 firestore.rules*
+!public/og-map.json
