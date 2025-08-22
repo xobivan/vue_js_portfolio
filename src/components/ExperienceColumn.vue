@@ -1,68 +1,64 @@
 <template>
-  
-  <div>
-    <h3 class="color-light"></h3>
-    <div class="resume-item">
-      <div class="year color-darker"></div>
-      <div class="resume-description">
-        <strong class="color-light"v-html="title"></strong>
-      </div>
-        <br></br>
-        <a :href="url" target="_blank" rel="noopener noreferrer">
-            <strong class="color-light" v-html="name"></strong>
-          <div class="color-darker" v-html="content"></div>
-          <div class = "year" v-html="date"></div>
-      </a>
-    </div>
-  </div>
+  <b-card 
+      style="width: 50%;
+              height : 100%; 
+              margin: 1rem;"
+      tag="article"
+      class="container d-flex justify-content-center align-items-center overflow-hidden"
+      id="card">  
+    <b-row no-gutters>
+      <b-col md="6">
+        <b-card-img :src="`https://opengraph.githubassets.com/1/${owner}/${name}`" alt="Image" class="rounded-0"/>     
+      </b-col>
+      <b-col md="6">
+        <b-card-body :title="name">
+            <b-card-text class="d-flex flex-column flex-grow-1">
+              <div class="d-flex flex-column flex-grow-1">
+                <p v-html="content"></p>
+              </div>
+            </b-card-text>
+            <span class = "year mt-auto align-bottom" v-html="date" style="font-weight:600; margin-bottom: 5px;"/>
+        </b-card-body>
+      </b-col>
+    </b-row>
+  </b-card>
 </template>
 
 <script>
-
-export default {
-  name: "ExperienceColumn",
-  props: {
-    title: {
-      type: String,
-      required: true
+  export default {
+    name: "ExperienceColumn",
+    props: {
+      title: {
+        type: String,
+        required: true
+      },
+      name: {
+        type: String,
+        required: true
+      },
+      content: {
+        type: String,
+        required: true
+      },
+      date: {
+        type: String,
+        required: false,
+      },
+      url:{
+        type: String,
+        required: true,
+      },
+      owner: {
+        type: String,
+        required: true,
+      }
     },
-    name: {
-      type: String,
-      required: true
-    },
-    content: {
-      type: String,
-      required: true
-    },
-    date: {
-      type: String,
-      required: false,
-    },
-    url:{
-      type: String,
-      required: true,
-    }
-  },
-};
+  };
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/constants.scss";
 
-.resume-item {
-  margin-bottom: 25px;
-  p {
-    font-size: 1.5rem;
-    margin-top: 0;
-  }
-  .resume-description {
-    font-size: 1.7rem;
-  }
-  .year {
-    font-weight: 600;
-    margin-bottom: 5px;
-  }
-}
 .color-light {
   color: map-get($colors, light);
 }
@@ -73,4 +69,8 @@ a {
   text-decoration: none;
   
 }
+a:hover {
+  text-decoration: none;
+}
+
 </style>

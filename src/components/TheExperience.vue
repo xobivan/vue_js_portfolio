@@ -1,35 +1,72 @@
-<template>
+<template>>
   <section id="experience">
     <AnimateOnVisible name="fadeDown" :duration="1">
       <Title class="title" :title="title" :description="descritption"/>
     </AnimateOnVisible>
 
-	<AnimateOnVisible name="fadeUp" :duration="1">
-		<div class="container-fluid">
-			<div class="row">
-				<ExperienceColumn
-					title="Education"
-					class="col-12 col-md left"
-				/>
-				<ExperienceColumn
-					title="Professional"
-					class="col-12 col-md right"
-          v-for="(repo, index) in repos"
-          :key="index"
-          :name="repo.name"
-          :content="repo.description || 'No description available'"
-          :date="new Date(repo.created_at).getFullYear()"
-          :url="repo.html_url"
-				/>
-			</div>
-		</div>
-	</AnimateOnVisible>
+    <div class="container px-4 text-center">
+      <b-button-group>
+        <b-button color="primary":variant="visibleGrid === 'Education' ? 'primary' : 'outline-primary'" @click="visibleGrid='Education'">Education</b-button>
+        <b-button :variant="visibleGrid === 'Professional' ? 'primary' : 'outline-primary'" @click="visibleGrid='Professional'">Professional</b-button>
+      </b-button-group>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <Title class="container px-4 text-center" :title="visibleGrid"></Title>
+          <swiper
+            :loop="true"
+            :effect="'coverflow'"
+            :grabCursor="true"
+            :centeredSlides="true"
+            :slidesPerView="'3'"
+            :coverflowEffect="{
+              rotate: 50,
+              stretch: 0,
+              depth: 100,
+              modifier: 1,
+              slideShadows: false,
+            }"
+            :pagination="true"
+            :modules="modules"
+            style="width: 70%; height:100%"
+            class="mySwiper">
+          <swiper-slide
+            v-if="visibleGrid==='Education'"
+            class="col-12 col-md-6 d-flex justify-content-center align-items-center" >
+            <div class="wrapper">
+              <ExperienceColumn/>
+            </div>
+          </swiper-slide>
+          <swiper-slide
+              v-if="visibleGrid === 'Professional'"
+              v-for="(repo, index) in repos"
+              :key="index"
+              class="col-12 col-md-6 d-flex justify-content-center align-items-center">
+            <ExperienceColumn
+              class="col-12 col-md right"
+              :name="repo.name"
+              :content="repo.description || 'No description available'"
+              :date="new Date(repo.created_at).getFullYear()"
+              :url="repo.html_url"
+              :owner="repo.owner.login"
+            />
+          </swiper-slide>
+        </swiper>
+      </div>
+    </div>
   </section>
 </template>
 
 <script>
 import Title from "./Title.vue";
 import ExperienceColumn from "./ExperienceColumn.vue";
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import '@/styles/slider.css';
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/pagination'; 
+import { EffectCoverflow, Pagination } from 'swiper/modules';
+
 
 export default {
   name: "Experience",
@@ -41,15 +78,22 @@ export default {
   },
   components: {
     Title,
-    ExperienceColumn
+    ExperienceColumn,
+    Swiper,
+    SwiperSlide,
+  },
+  setup() {
+    return {
+      modules: [EffectCoverflow, Pagination],
+    };
   },
   data(){
     return{
       title:"Experience",
       descritption:"My achievements",
-
+      visibleGrid: "Professional",
     }
-  }
+  },
 };
 </script>
 

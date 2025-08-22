@@ -25,13 +25,16 @@
     "@fortawesome/free-brands-svg-icons": "^7.0.0",
     "@fortawesome/free-solid-svg-icons": "^7.0.0",
     "@fortawesome/vue-fontawesome": "^3.1.1",
+    "@mdi/font": "^7.4.47",
     "bootstrap": "^5.3.7",
-    "bootstrap-vue-3": "^0.5.1",
+    "bootstrap-vue-3": "^0.3.12",
     "dotenv": "^17.2.1",
     "firebase": "^12.1.0",
+    "swiper": "^11.2.10",
     "vue": "^3.5.18",
     "vue2-animate": "^2.1.4",
-    "vuefire": "^3.2.2"
+    "vuefire": "^3.2.2",
+    "vuetify": "^3.9.5"
   },
   "devDependencies": {
     "@vue/cli-service": "^5.0.8",
