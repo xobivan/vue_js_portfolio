@@ -4,10 +4,10 @@
       class="xp-card container overflow-hidden"
       id="card">  
     <b-row no-gutters class="h-100">
-      <b-col md="6" style="margin-bottom: 1.75rem; margin-top: 1.25rem;">
+      <b-col md="6" style="margin-bottom: 1.75rem; margin-top: 1.25rem; padding-bottom: 0.5rem;">
         <b-card-img :src="src" :alt="alt || name" class="xp-card__image rounded-3"/>     
       </b-col>
-      <b-col md="6" class="h-100">
+      <b-col md="6" class="h-100" style="padding: 0.5rem;">
         <b-card-body class="xp-card__body d-flex flex-column h-100 ">
           <h3 class="color-light color-darker">{{ name }}</h3>
             <b-card-text class="d-flex flex-column flex-grow-1 min-h-0">
