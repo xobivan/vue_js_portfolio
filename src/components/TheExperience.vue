@@ -118,7 +118,7 @@ export default {
   @import "@/styles/constants.scss";
   .xpSwitcher {
     --swiper-navigation-sides-offset: 83rem;
-    --swiper-navigation-top-offset: 1.5rem;
+    --swiper-navigation-top-offset: 8rem;
     --swiper-navigation-size: 16px;
     --swiper-navigation-color: #fff;
       margin-bottom: 5rem;
@@ -134,11 +134,6 @@ export default {
   .swiper-slide#xpSwitcher{
     width: 300px;
     height: 1rem;
-  }
-  @media (max-width: #{map-get($breakpoints, small)}) {
-    .xpSwitcher {
-      --swiper-navigation-sides-offset: 8rem;
-    }
   }
   $linear: map-get($colors, dark);
   #experience,#visibleGrid {
@@ -176,6 +171,9 @@ export default {
       height  : 2px;
       width   : 60%;  /* or 100px */
       border-bottom:2px solid $linear;
+    }
+    .xpSwitcher {
+      --swiper-navigation-sides-offset: 8rem;
     }
   }
 
