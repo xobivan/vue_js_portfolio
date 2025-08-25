@@ -118,7 +118,7 @@ export default {
   @import "@/styles/constants.scss";
   .xpSwitcher {
     --swiper-navigation-sides-offset: 83rem;
-    --swiper-navigation-top-offset: 8rem;
+    --swiper-navigation-top-offset: 6rem;
     --swiper-navigation-size: 16px;
     --swiper-navigation-color: #fff;
       margin-bottom: 5rem;
