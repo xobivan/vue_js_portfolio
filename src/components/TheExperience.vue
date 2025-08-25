@@ -117,9 +117,10 @@ export default {
   .xpSwitcher{
     position : relative;
     width: max-content;
-    margin: 0 auto 5rem;
-    --swiper-navigation-sides-offset: 83rem;
-    --swiper-navigation-top-offset: 1rem;
+    height: 3rem;
+    margin: 0 auto 2rem;
+    /* --swiper-navigation-sides-offset: 83rem; */
+   /*  --swiper-navigation-top-offset: 1rem; */
     --swiper-navigation-size: 16px;
     --swiper-navigation-color: #fff;
   }
@@ -132,6 +133,10 @@ export default {
     background: rgba(0,0,0,0.6);
     display: flex; align-items: center; justify-content: center;
   }
+
+  .xpSwitcher :deep(.swiper-button-prev) { left: 0.75rem !important; }
+  .xpSwitcher :deep(.swiper-button-next) { right: 0.75rem !important; }
+
   :deep(.xpSwitcher-slide) { width: 300px; height: 1rem; }
   $linear: map-get($colors, dark);
   #experience,#visibleGrid {
