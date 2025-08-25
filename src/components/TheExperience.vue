@@ -15,7 +15,7 @@
         }"
         :modules="modules"
         class="xpSwitcher">   
-          <swiper-slide v-for="(visibleGrid, index) in grids" :key="index">
+          <swiper-slide v-for="(visibleGrid, index) in grids" :key="index" id="xpSwitcher">
             <Title id="visibleGrid" class="container px-4 text-center" :description="visibleGrid"></Title>
           </swiper-slide>
         </swiper>
@@ -119,12 +119,10 @@ export default {
   @import "@/styles/constants.scss";
   .xpSwitcher {
     --swiper-navigation-sides-offset: 83rem;
-    --swiper-navigation-top-offset: 15%;
+    --swiper-navigation-top-offset: 6rem;
     --swiper-navigation-size: 16px;
     --swiper-navigation-color: #fff;
   }
-
-  /* make the button hitbox smaller; needs :deep because of <style scoped> */
   .xpSwitcher :deep(.swiper-button-prev),
   .xpSwitcher :deep(.swiper-button-next) {
     width: 28px;
@@ -133,6 +131,13 @@ export default {
     background: rgba(0,0,0,0.6);
     display: flex; align-items: center; justify-content: center;
   }
+  .swiper-slide#xpSwitcher :deep{
+    background-position: center;
+    background-size: cover;
+    width: 300px;
+    height: 1rem;
+  }
+
 
   $linear: map-get($colors, dark);
   #experience,#visibleGrid {
