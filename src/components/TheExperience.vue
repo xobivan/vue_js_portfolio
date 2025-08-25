@@ -119,10 +119,15 @@ export default {
     width: max-content;
     height: 3rem;
     margin: 0 auto 2rem;
-    /* --swiper-navigation-sides-offset: 83rem; */
-   /*  --swiper-navigation-top-offset: 1rem; */
+    --swiper-navigation-sides-offset: 83rem;
     --swiper-navigation-size: 16px;
     --swiper-navigation-color: #fff;
+  }
+  .xpSwitcher.swiper,
+  .mySwiper.swiper {
+    padding: 0 !important;
+    /* иногда помогает явно вернуть модель коробки */
+    box-sizing: content-box;
   }
   .xpSwitcher :deep(.swiper-button-prev),
   .xpSwitcher :deep(.swiper-button-next) {
@@ -134,10 +139,6 @@ export default {
     display: flex; align-items: center; justify-content: center;
   }
 
-  .xpSwitcher :deep(.swiper-button-prev) { left: 0.75rem !important; }
-  .xpSwitcher :deep(.swiper-button-next) { right: 0.75rem !important; }
-
-  :deep(.xpSwitcher-slide) { width: 300px; height: 1rem; }
   $linear: map-get($colors, dark);
   #experience,#visibleGrid {
     background-color: lighten(map-get($colors, primary), 5%);
