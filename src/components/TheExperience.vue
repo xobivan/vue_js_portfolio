@@ -33,7 +33,6 @@
             modifier: 1,
             slideShadows: false
           }"
-          
           :breakpoints="{
             430: {
               slidesPerView: 1,
@@ -119,9 +118,10 @@ export default {
   @import "@/styles/constants.scss";
   .xpSwitcher {
     --swiper-navigation-sides-offset: 83rem;
-    --swiper-navigation-top-offset: 6rem;
+    --swiper-navigation-top-offset: 1.5rem;
     --swiper-navigation-size: 16px;
     --swiper-navigation-color: #fff;
+      margin-bottom: 5rem;
   }
   .xpSwitcher :deep(.swiper-button-prev),
   .xpSwitcher :deep(.swiper-button-next) {
@@ -131,14 +131,15 @@ export default {
     background: rgba(0,0,0,0.6);
     display: flex; align-items: center; justify-content: center;
   }
-  .swiper-slide#xpSwitcher :deep{
-    background-position: center;
-    background-size: cover;
+  .swiper-slide#xpSwitcher{
     width: 300px;
     height: 1rem;
   }
-
-
+  @media (max-width: #{map-get($breakpoints, small)}) {
+    .xpSwitcher {
+      --swiper-navigation-sides-offset: 8rem;
+    }
+  }
   $linear: map-get($colors, dark);
   #experience,#visibleGrid {
     background-color: lighten(map-get($colors, primary), 5%);
