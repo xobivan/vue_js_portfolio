@@ -39,10 +39,12 @@
               pagination:true,
             },
             768: {slidesPerView: 2,},
-            1024: {slidesPerView: 3,},
+            1024: {
+              height: '100%',
+              slidesPerView: 3,},
           }"
           :modules="modules"
-          style="max-width: max-content;  width: 75%; height:100%"
+          style="max-width: max-content;  width: 75%; height:100%;"
           class="mySwiper">
           <swiper-slide
             v-if="visibleGrid==='Education'">
@@ -75,7 +77,6 @@
 import Title from "./Title.vue";
 import ExperienceColumn from "./ExperienceColumn.vue";
 import { Swiper, SwiperSlide } from 'swiper/vue';
-/* import '@/styles/slider.css'; */
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination'; 

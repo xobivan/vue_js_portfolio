@@ -37,7 +37,6 @@
 
 <style scoped lang="scss">
 @import "@/styles/constants.scss";
-@import "@/styles/slider.css";
 
 .color-light {
   color: map-get($colors, light);
