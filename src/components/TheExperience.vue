@@ -1,44 +1,50 @@
 <template>
   <section id="experience">
     <AnimateOnVisible name="fadeDown" :duration="1">
-      <Title class="title" :title="title" :description="descritption"/>
+      <Title class="title" :title="title"/>
     </AnimateOnVisible>
-
-    <div class="container px-4 text-center">
-      <b-button-group>
-        <b-button color="primary":variant="visibleGrid === 'Education' ? 'primary' : 'outline-primary'" @click="visibleGrid='Education'">Education</b-button>
-        <b-button :variant="visibleGrid === 'Professional' ? 'primary' : 'outline-primary'" @click="visibleGrid='Professional'">Professional</b-button>
-      </b-button-group>
-    </div>
     <div class="container-fluid">
       <div class="row">
-        <Title class="container px-4 text-center" :title="visibleGrid"></Title>
-          <swiper
-            :effect="'coverflow'"
-            :mousewheel="true"
-            :loop="true"
-            :grabCursor="true"
-            :centeredSlides="true"
-            :slidesPerView="'auto'"     
-            :coverflowEffect="{
-              rotate: 50,
-              stretch: 0,
-              depth: 100,
-              modifier: 1,
-              slideShadows: false
-            }"
-            
-            :breakpoints="{
-              430: {
-                slidesPerView: 1,
-                pagination:true,
-              },
-              768: {slidesPerView: 2,},
-              1024: {slidesPerView: 3,},
-            }"
-            :modules="modules"
-            style="max-width: max-content;  width: 75%; height:100%"
-            class="mySwiper">
+        <swiper @slideChange="()=>{visibleGrid ==='Professional'? visibleGrid='Education':visibleGrid='Professional'}"
+        :effect="'flip'"
+        :navigation="true"
+        :grabCursor="true"
+        :slidesPerView="1"
+        :flipEffect="{
+          slideShadows: false,
+        }"
+        :modules="modules"
+        class="xpSwitcher">   
+          <swiper-slide v-for="(visibleGrid, index) in grids" :key="index">
+            <Title id="visibleGrid" class="container px-4 text-center" :description="visibleGrid"></Title>
+          </swiper-slide>
+        </swiper>
+        <swiper
+          :effect="'coverflow'"
+          :mousewheel="true"
+          :loop="true"
+          :grabCursor="true"
+          :centeredSlides="true"
+          :slidesPerView="'auto'"     
+          :coverflowEffect="{
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: false
+          }"
+          
+          :breakpoints="{
+            430: {
+              slidesPerView: 1,
+              pagination:true,
+            },
+            768: {slidesPerView: 2,},
+            1024: {slidesPerView: 3,},
+          }"
+          :modules="modules"
+          style="max-width: max-content;  width: 75%; height:100%"
+          class="mySwiper">
           <swiper-slide
             v-if="visibleGrid==='Education'"
             class="col-12 col-md-6 d-flex justify-content-center align-items-center" >
@@ -76,8 +82,10 @@ import '@/styles/slider.css';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination'; 
-import { EffectCoverflow, Pagination, Mousewheel } from 'swiper/modules';
-import { fa } from "vuetify/locale";
+import 'swiper/css/effect-flip';
+import 'swiper/css/navigation';
+import { Navigation, EffectCoverflow, Pagination, Mousewheel, EffectFlip,  } from 'swiper/modules';
+
 
 
 export default {
@@ -94,65 +102,80 @@ export default {
   },
   setup() {
     return {
-      modules: [EffectCoverflow, Pagination, Mousewheel],
+      modules: [Navigation, EffectCoverflow, Pagination, Mousewheel, EffectFlip, ],
     };
   },
   data(){
     return{
       title:"Experience",
-      descritption:"My achievements",
-      visibleGrid: "Professional",
+      grids:["Professional", "Education"],
+      visibleGrid:"Professional",
     }
   },
 };
 </script>
 
 <style scoped lang="scss">
-@import "@/styles/constants.scss";
-
-$linear: map-get($colors, dark);
-
-#experience {
-  background-color: lighten(map-get($colors, primary), 5%);
-}
-
-.title {
-  color: map-get($colors, light);
-}
-
-.row {
-  padding-top: 20px;
-  text-align: center;
-}
-
-@media (min-width: #{map-get($breakpoints, small)}) {
-  .left {
-    text-align: right;
-    border-right: 2px solid $linear;
+  @import "@/styles/constants.scss";
+  .xpSwitcher {
+    --swiper-navigation-sides-offset: 83rem;
+    --swiper-navigation-top-offset: 15%;
+    --swiper-navigation-size: 16px;
+    --swiper-navigation-color: #fff;
   }
-  .right {
-    text-align: left;
-  }
-}
 
-@media (max-width: #{map-get($breakpoints, small)}) {
-  .right {
-    margin-top: 20px;
+  /* make the button hitbox smaller; needs :deep because of <style scoped> */
+  .xpSwitcher :deep(.swiper-button-prev),
+  .xpSwitcher :deep(.swiper-button-next) {
+    width: 28px;
+    height: 28px;
+    border-radius: 9999px;
+    background: rgba(0,0,0,0.6);
+    display: flex; align-items: center; justify-content: center;
   }
-  .left:before {
-    content : "";
-    position: absolute;
-    left    : 20%;
-    bottom  : 0;
-    height  : 2px;
-    width   : 60%;  /* or 100px */
-    border-bottom:2px solid $linear;
-  }
-}
 
-.text-wrapper {
-  &:after {
-    border-bottom: 1px solid map-get($colors, dark);
+  $linear: map-get($colors, dark);
+  #experience,#visibleGrid {
+    background-color: lighten(map-get($colors, primary), 5%);
   }
-}
+
+  .title {
+    color: map-get($colors, light);
+  }
+
+  .row {
+    padding-top: 20px;
+    text-align: center;
+  }
+
+  @media (min-width: #{map-get($breakpoints, small)}) {
+    .left {
+      text-align: right;
+      border-right: 2px solid $linear;
+    }
+    .right {
+      text-align: left;
+    }
+  }
+
+  @media (max-width: #{map-get($breakpoints, small)}) {
+    .right {
+      margin-top: 20px;
+    }
+    .left:before {
+      content : "";
+      position: absolute;
+      left    : 20%;
+      bottom  : 0;
+      height  : 2px;
+      width   : 60%;  /* or 100px */
+      border-bottom:2px solid $linear;
+    }
+  }
+
+  .text-wrapper {
+    &:after {
+      border-bottom: 1px solid map-get($colors, dark);
+    }
+  }
 </style>
