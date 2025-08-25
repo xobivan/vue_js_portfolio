@@ -15,7 +15,7 @@
         }"
         :modules="modules"
         class="xpSwitcher">   
-          <swiper-slide v-for="(visibleGrid, index) in grids" :key="index" id="xpSwitcher">
+          <swiper-slide v-for="(visibleGrid, index) in grids" :key="index" class="xpSwitcher-slide">
             <Title id="visibleGrid" class="container px-4 text-center" :description="visibleGrid"></Title>
           </swiper-slide>
         </swiper>
@@ -45,8 +45,7 @@
           style="max-width: max-content;  width: 75%; height:100%"
           class="mySwiper">
           <swiper-slide
-            v-if="visibleGrid==='Education'"
-            class="col-12 col-md-6 d-flex justify-content-center align-items-center" >
+            v-if="visibleGrid==='Education'">
             <div class="wrapper">
               <ExperienceColumn/>
             </div>
@@ -54,8 +53,7 @@
           <swiper-slide
               v-if="visibleGrid === 'Professional'"
               v-for="(repo, index) in repos"
-              :key="index"
-              class="col-12 col-md-6 d-flex justify-content-around align-items-center">
+              :key="index">
             <ExperienceColumn
               class="col-12 col-md right"
               :name="repo.name.replace(/-/g, ' ')"
@@ -117,11 +115,12 @@ export default {
 <style scoped lang="scss">
   @import "@/styles/constants.scss";
   .xpSwitcher {
+    position : relative;
+    margin: 0 auto 5rem;
     --swiper-navigation-sides-offset: 83rem;
-    --swiper-navigation-top-offset: 6rem;
+    --swiper-navigation-top-offset: 1rem;
     --swiper-navigation-size: 16px;
     --swiper-navigation-color: #fff;
-      margin-bottom: 5rem;
   }
   .xpSwitcher :deep(.swiper-button-prev),
   .xpSwitcher :deep(.swiper-button-next) {
@@ -131,10 +130,7 @@ export default {
     background: rgba(0,0,0,0.6);
     display: flex; align-items: center; justify-content: center;
   }
-  .swiper-slide#xpSwitcher{
-    width: 300px;
-    height: 1rem;
-  }
+  :deep(.xpSwitcher-slide) { width: 300px; height: 1rem; }
   $linear: map-get($colors, dark);
   #experience,#visibleGrid {
     background-color: lighten(map-get($colors, primary), 5%);
