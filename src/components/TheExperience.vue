@@ -75,7 +75,7 @@
 import Title from "./Title.vue";
 import ExperienceColumn from "./ExperienceColumn.vue";
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import '@/styles/slider.css';
+/* import '@/styles/slider.css'; */
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination'; 
@@ -114,8 +114,9 @@ export default {
 
 <style scoped lang="scss">
   @import "@/styles/constants.scss";
-  .xpSwitcher {
+  .xpSwitcher{
     position : relative;
+    width: max-content;
     margin: 0 auto 5rem;
     --swiper-navigation-sides-offset: 83rem;
     --swiper-navigation-top-offset: 1rem;
@@ -124,6 +125,7 @@ export default {
   }
   .xpSwitcher :deep(.swiper-button-prev),
   .xpSwitcher :deep(.swiper-button-next) {
+    position: absolute;
     width: 28px;
     height: 28px;
     border-radius: 9999px;
