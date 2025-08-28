@@ -5,7 +5,7 @@
       id="card">  
     <b-row no-gutters class="h-100">
       <b-col md="6">
-        <b-card-img :src="src" :alt="alt || name" class="xp-card__image rounded-3"/>     
+        <b-card-img src="https://repository-images.githubusercontent.com/900526062/c746b943-a751-4d4e-bb54-5a68082d346c" :alt="alt || name" class="xp-card__image rounded-3"/>     
       </b-col>
       <b-col md="6" class="xp-card__body d-flex flex-column h-100 text-start" style="padding: 0.5rem;">
         <b-card-body id="body">
@@ -81,12 +81,6 @@
     bottom: 0;
     margin-left: 1rem;
   }
-  .xp-card__image{
-    padding-top: 2rem !important;
-    padding-bottom: 1.5rem !important;
-    margin:0 !important;
-    height: 100% !important;
-  }
 }
 
 
@@ -116,11 +110,10 @@
 
 .xp-card__image {
   width: 100%;
-  height: 90%;
-  object-fit: cover;
-  margin-bottom: 1.75rem; 
-  margin-top: 1.25rem; 
-  padding-bottom: 0.5rem;
+  height: 100%;
+  object-fit: cover; 
+  margin-top: 1.75rem; 
+  padding-bottom: 3rem;
 }
 
 .xp-card__body {
@@ -146,6 +139,6 @@
 
 .year {
   font-weight: 600;
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
 }
 </style>
