@@ -143,7 +143,7 @@ export default {
   }
 
   .title {
-    color: map-get($colors, light);
+    color: map-get($colors, light) !important;
   }
 
   .row {
