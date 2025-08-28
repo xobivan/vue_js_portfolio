@@ -1,24 +1,27 @@
 <script setup>
   import {onMounted, provide} from "vue";
+  import { defineAsyncComponent } from 'vue';
   import { useImages } from "./composables/useImages.js";
   import { useUserData } from "./composables/useUserData.js";
   import { useBio } from "./composables/useBio.js";
   import { useAppLoader } from "./composables/useAppLoader.js";
   import { useGitRepos } from "./composables/useGitRepos.js";
-  import ProfileCard from"./components/ProfileCard.vue";
+/*   import ProfileCard from"./components/ProfileCard.vue";
   import Description from "./components/Description.vue";
   import TheExperience from './components/TheExperience.vue';
-  import Skills from "./components/Skills.vue";
-  
+  import Skills from "./components/Skills.vue"; */
 
-  
+  const ProfileCard = defineAsyncComponent(() => import("./components/ProfileCard.vue"));
+  const Description = defineAsyncComponent(() => import("./components/Description.vue"));
+  const TheExperience = defineAsyncComponent(() => import("./components/TheExperience.vue"));
+  const Skills = defineAsyncComponent(() => import("./components/Skills.vue"));
   
   const { userData, links, fetchUserData } = useUserData();
   const { bio, fetchBio } = useBio();
   const { fetchIcons, fetchProfilePictures, fetchBackground, images, photo, backgroundImage } = useImages();
   const { repos, fetchRepos } = useGitRepos();
   const {isLoaded, loadAll} = useAppLoader(fetchUserData, fetchBio, fetchIcons, fetchProfilePictures, fetchBackground, fetchRepos);
-  onMounted(loadAll);
+  onMounted(loadAll)
 
   provide("userStore", {bio, userData, links});
 </script>

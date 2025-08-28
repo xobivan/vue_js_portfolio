@@ -4,20 +4,20 @@
       class="xp-card container overflow-hidden"
       id="card">  
     <b-row no-gutters class="h-100">
-      <b-col md="6" style="margin-bottom: 1.75rem; margin-top: 1.25rem; padding-bottom: 0.5rem;">
-        <b-card-img :src="src" :alt="alt || name" class="xp-card__image rounded-3"/>     
+      <b-col md="6">
+        <b-card-img src="https://repository-images.githubusercontent.com/885078920/55e7cf5d-05f7-43ed-a236-9f31238cb5a9" :alt="alt || name" class="xp-card__image rounded-3"/>     
       </b-col>
-      <b-col md="6" class="h-100" style="padding: 0.5rem;">
-        <b-card-body class="xp-card__body d-flex flex-column h-100 ">
-          <h3 class="color-light color-darker">{{ name }}</h3>
+      <b-col md="6" class="xp-card__body d-flex flex-column h-100 text-start" style="padding: 0.5rem;">
+        <b-card-body id="body">
+          <h3 class="color-light color-darker xp-card__name" :id="name">{{ name }}</h3>
             <b-card-text class="d-flex flex-column flex-grow-1 min-h-0">
                 <p v-html="content" class=" xp-card__desc secondary "></p>
             </b-card-text>
-            <span class = "year mt-auto align-bottom" v-html="date"/>
         </b-card-body>
+        <span class = "year align-text-bottom" v-html="date"/>
       </b-col>
     </b-row>
-  </b-card>
+  </b-card>>
 </template>
 
 <script>
@@ -32,11 +32,63 @@
       src: {type: String, required: false, default: ''},
       alt: {type: String, required: false, default: ''},
     },
+    
   };
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/constants.scss";
+
+@media(max-width: #{map-get($breakpoints, small)}){
+  .xp-card__desc{display: none !important;}
+  .xp-card{
+    height: 100% !important;
+    padding-right: 1.1rem !important;
+  }
+  .xp-card__body{
+    padding-left: 0 !important;
+  }
+  .xp-card__name{
+    margin-bottom: 2rem;
+  }
+  .year{
+    margin-left: 0rem !important;
+  }
+  #body{
+    padding-left: 0;
+  }
+}
+
+@media(max-width: #{map-get($breakpoints, medium)}){
+  .xp-card{height: 100% !important;}
+  .year{
+    position: absolute;
+    bottom: 0;
+    margin-left: 1rem;
+  }
+  .xp-card__image{
+    padding-top: 2rem !important;
+    padding-bottom: 1.5rem !important;
+    margin:0 !important;
+    height: 100% !important;
+  }
+}
+
+@media(min-width: #{map-get($breakpoints, medium)}){
+  .xp-card{height: 100% !important;}
+  .year{
+    position: absolute;
+    bottom: 0;
+    margin-left: 1rem;
+  }
+  .xp-card__image{
+    padding-top: 2rem !important;
+    padding-bottom: 1.5rem !important;
+    margin:0 !important;
+    height: 100% !important;
+  }
+}
+
 
 .color-light {
   color: map-get($colors, light);
@@ -64,13 +116,18 @@
 
 .xp-card__image {
   width: 100%;
-  height: 100%;
+  height: 90%;
   object-fit: cover;
+  margin-bottom: 1.75rem; 
+  margin-top: 1.25rem; 
+  padding-bottom: 0.5rem;
 }
 
 .xp-card__body {
   display: flex;
   flex-direction: column;
+  justify-content: space-between; /* Чтобы контент был равномерно распределен */
+  align-items: flex-start;
   min-height: 0;
 }
 .xp-card__desc {
@@ -84,10 +141,11 @@
   line-clamp: 5;
   text-overflow: ellipsis;
 
+  flex-grow: 1;
 }
 
 .year {
   font-weight: 600;
-  margin-bottom: 4px;
+  margin-bottom: 2rem;
 }
 </style>

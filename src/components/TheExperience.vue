@@ -21,11 +21,11 @@
         </swiper>
         <swiper
           :effect="'coverflow'"
+          :pagination="true"
           :mousewheel="true"
           :loop="true"
           :grabCursor="true"
-          :centeredSlides="true"
-          :slidesPerView="'auto'"     
+          :centeredSlides="true"     
           :coverflowEffect="{
             rotate: 50,
             stretch: 0,
@@ -34,14 +34,12 @@
             slideShadows: false
           }"
           :breakpoints="{
-            430: {
-              slidesPerView: 1,
-              pagination:true,
-            },
-            768: {slidesPerView: 2,},
-            1024: {
-              height: '100%',
-              slidesPerView: 3,},
+            430: {slidesPerView: 1,},
+            768: {slidesPerView: 1,},
+            1024: {slidesPerView: 1,},
+            1200:{slidesPerView: 2, pagination: false},
+            1500:{slidesPerView: 3, pagination: false},
+            
           }"
           :modules="modules"
           style="max-width: max-content;  width: 75%; height:100%;"
@@ -49,10 +47,11 @@
           <swiper-slide
             v-if="visibleGrid==='Education'">
             <div class="wrapper">
-              <ExperienceColumn/>
+              <ExperienceColumn class="xpSwiperSlide"/>
             </div>
           </swiper-slide>
           <swiper-slide
+              class="xpSwiperSlide"
               v-if="visibleGrid === 'Professional'"
               v-for="(repo, index) in repos"
               :key="index">
@@ -127,7 +126,6 @@ export default {
   .xpSwitcher.swiper,
   .mySwiper.swiper {
     padding: 0 !important;
-    /* иногда помогает явно вернуть модель коробки */
     box-sizing: content-box;
   }
   .xpSwitcher :deep(.swiper-button-prev),
@@ -164,7 +162,7 @@ export default {
     }
   }
 
-  @media (max-width: #{map-get($breakpoints, small)}) {
+  @media (min-width: #{map-get($breakpoints, small)}){
     .right {
       margin-top: 20px;
     }
@@ -178,9 +176,26 @@ export default {
       border-bottom:2px solid $linear;
     }
     .xpSwitcher {
-      --swiper-navigation-sides-offset: 8rem;
+      --swiper-navigation-sides-offset: 20%;
     }
   }
+    @media (max-width: #{map-get($breakpoints, medium)}) {
+      .xpSwiperSlide{justify-items: center;}
+      .xpSwitcher {
+        --swiper-navigation-sides-offset: 30%;
+      }
+    }
+    @media (min-width: #{map-get($breakpoints, medium)}) {
+      .xpSwiperSlide{justify-items: center;}
+      .xpSwitcher {
+        --swiper-navigation-sides-offset: 40%;
+      }
+    }    
+    @media (min-width: #{map-get($breakpoints, large)}) {
+      .xpSwitcher {
+        --swiper-navigation-sides-offset: 43%;
+      }
+    }  
 
   .text-wrapper {
     &:after {
