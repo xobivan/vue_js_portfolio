@@ -5,7 +5,7 @@
       id="card">  
     <b-row no-gutters class="h-100">
       <b-col md="6">
-        <b-card-img src="https://repository-images.githubusercontent.com/885078920/55e7cf5d-05f7-43ed-a236-9f31238cb5a9" :alt="alt || name" class="xp-card__image rounded-3"/>     
+        <b-card-img :src="src" :alt="alt || name" class="xp-card__image rounded-3"/>     
       </b-col>
       <b-col md="6" class="xp-card__body d-flex flex-column h-100 text-start" style="padding: 0.5rem;">
         <b-card-body id="body">
