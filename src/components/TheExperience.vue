@@ -119,7 +119,6 @@ export default {
     width: max-content;
     height: 3rem;
     margin: 0 auto 2rem;
-    --swiper-navigation-sides-offset: 83rem;
     --swiper-navigation-size: 16px;
     --swiper-navigation-color: #fff;
   }
@@ -176,13 +175,13 @@ export default {
       border-bottom:2px solid $linear;
     }
     .xpSwitcher {
-      --swiper-navigation-sides-offset: 20%;
+      --swiper-navigation-sides-offset: 30%;
     }
   }
     @media (max-width: #{map-get($breakpoints, medium)}) {
       .xpSwiperSlide{justify-items: center;}
       .xpSwitcher {
-        --swiper-navigation-sides-offset: 30%;
+        --swiper-navigation-sides-offset: 25%;
       }
     }
     @media (min-width: #{map-get($breakpoints, medium)}) {
