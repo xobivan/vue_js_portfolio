@@ -119,8 +119,9 @@
 
 .xp-card__body {
   display: flex;
+  object-fit: cover;
   flex-direction: column;
-  justify-content: space-between; /* Чтобы контент был равномерно распределен */
+  justify-content: space-between;
   align-items: flex-start;
   min-height: 0;
 }

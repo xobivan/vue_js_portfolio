@@ -6,10 +6,8 @@
   import { useBio } from "./composables/useBio.js";
   import { useAppLoader } from "./composables/useAppLoader.js";
   import { useGitRepos } from "./composables/useGitRepos.js";
-/*   import ProfileCard from"./components/ProfileCard.vue";
-  import Description from "./components/Description.vue";
-  import TheExperience from './components/TheExperience.vue';
-  import Skills from "./components/Skills.vue"; */
+  import { useEducations } from "./composables/useEducations.js";
+
 
   const ProfileCard = defineAsyncComponent(() => import("./components/ProfileCard.vue"));
   const Description = defineAsyncComponent(() => import("./components/Description.vue"));
@@ -17,10 +15,11 @@
   const Skills = defineAsyncComponent(() => import("./components/Skills.vue"));
   
   const { userData, links, fetchUserData } = useUserData();
+  const { educations, fetchCollection } = useEducations();
   const { bio, fetchBio } = useBio();
   const { fetchIcons, fetchProfilePictures, fetchBackground, images, photo, backgroundImage } = useImages();
   const { repos, fetchRepos } = useGitRepos();
-  const {isLoaded, loadAll} = useAppLoader(fetchUserData, fetchBio, fetchIcons, fetchProfilePictures, fetchBackground, fetchRepos);
+  const {isLoaded, loadAll} = useAppLoader(fetchUserData, fetchBio, fetchIcons, fetchProfilePictures, fetchBackground, fetchRepos, fetchCollection);
   onMounted(loadAll)
 
   provide("userStore", {bio, userData, links});
@@ -31,7 +30,7 @@
     <div class="wrapper" v-if="isLoaded && backgroundImage" id="app">
       <profile-card :user = "userData.name" :background = "backgroundImage"></profile-card>
       <description :photo="photo"></description>
-      <the-experience :repos="repos"></the-experience>
+      <the-experience :repos="repos" :educations="educations"></the-experience>
       <skills :images="images"></skills>
     </div>
   </transition>

@@ -3,11 +3,10 @@ import { createApp } from 'vue';
 import BootstrapVue3 from 'bootstrap-vue-3';
 import App from './App.vue';
 import { VueFire } from "vuefire";
-import { db } from "./firebase/db.js"; // <-- import db
+import { db } from "./firebase/db.js";
 import AnimateOnVisible from "./components/AnimateOnVisible.vue";
-import { createVuetify } from 'vuetify';
-import 'vuetify/styles'; // Global CSS has to be imported
-import '@mdi/font/css/materialdesignicons.css'; // Ensure you are using css-loader
+import 'vuetify/styles'; 
+import '@mdi/font/css/materialdesignicons.css'; 
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue-3/dist/bootstrap-vue-3.css';
@@ -19,14 +18,12 @@ import { faInstagramSquare, faLinkedin, faGithubSquare } from '@fortawesome/free
 
 library.add(faCopyright, faInstagramSquare, faLinkedin, faGithubSquare);
 
-const vuetify = createVuetify();
 
 createApp(App)
   .component('font-awesome-icon', FontAwesomeIcon)
   .component('AnimateOnVisible', AnimateOnVisible)
   .use(BootstrapVue3)
   .use(VueFire, { firestore: db })
-  .use(vuetify)
   .mount('#app');
 
 import 'bootstrap/dist/js/bootstrap.js';

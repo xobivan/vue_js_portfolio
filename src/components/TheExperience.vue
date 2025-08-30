@@ -23,7 +23,7 @@
           :effect="'coverflow'"
           :pagination="true"
           :mousewheel="true"
-          :loop="true"
+          :loop="false"
           :grabCursor="true"
           :centeredSlides="true"     
           :coverflowEffect="{
@@ -45,10 +45,18 @@
           style="max-width: max-content;  width: 75%; height:100%;"
           class="mySwiper">
           <swiper-slide
-            v-if="visibleGrid==='Education'">
-            <div class="wrapper">
-              <ExperienceColumn class="xpSwiperSlide"/>
-            </div>
+            class="xpSwiperSlide"
+            v-if="visibleGrid==='Education'"
+            v-for="(education, index) in educations"
+            :key="index">
+              <ExperienceColumn
+                class="col-12 col-md right"
+                v-if="education.isVisible == true"
+                :name="education.title"
+                :content="education.description"
+                :date="education.year"
+                :src="education.logoUrl"
+                />
           </swiper-slide>
           <swiper-slide
               class="xpSwiperSlide"
@@ -89,7 +97,8 @@ export default {
   name: "Experience",
 
   props: {
-    repos: {type: Array,required: true}
+    repos: {type: Array,required: true},
+    educations: {type: Array,required: true}
   },
   components: {
     Title,
@@ -151,7 +160,7 @@ export default {
     text-align: center;
   }
 
-  @media (min-width: #{map-get($breakpoints, small)}) {
+  @media (max-width: #{map-get($breakpoints, small)}) {
     .left {
       text-align: right;
       border-right: 2px solid $linear;
@@ -185,7 +194,7 @@ export default {
       }
     }
     @media (min-width: #{map-get($breakpoints, medium)}) {
-      .xpSwiperSlide{justify-items: center;}
+      .xpSwiperSlide{justify-items: center; margin-bottom: 1.5rem;}
       .xpSwitcher {
         --swiper-navigation-sides-offset: 40%;
       }
@@ -200,5 +209,6 @@ export default {
     &:after {
       border-bottom: 1px solid map-get($colors, dark);
     }
+
   }
 </style>

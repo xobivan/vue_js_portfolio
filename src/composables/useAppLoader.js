@@ -1,6 +1,6 @@
 import { ref, nextTick} from "vue";
 
-export function useAppLoader(fetchUserData, fetchBio, fetchIcons, fetchProfilePictures, fetchBackground, fetchRepos) {
+export function useAppLoader(fetchUserData, fetchBio, fetchIcons, fetchProfilePictures, fetchBackground, fetchRepos, fetchCollection) {
   const isLoaded = ref(false);
   const loadAll = async()=>{
     isLoaded.value = true;
@@ -12,6 +12,7 @@ export function useAppLoader(fetchUserData, fetchBio, fetchIcons, fetchProfilePi
     await fetchProfilePictures();
     await fetchBackground();
     await fetchRepos();
+    await fetchCollection();
   }
 
   return { isLoaded, loadAll };
