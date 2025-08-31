@@ -50,6 +50,7 @@
             v-for="(education, index) in educations"
             :key="index"
               @pointerdown = "pointerdown"
+              @pointermove="pointermove"
               @pointerup = "pointerup">
             <ExperienceColumn
               class="col-12 col-md right"
@@ -119,27 +120,31 @@ export default {
       grids:["Professional", "Education"],
       visibleGrid:"Professional",
       SWIPE_THRESHOLD: 10,
-      pressedAt: null,
-      releasedAt: null,
-      wasSwipe: null
+      startX: null,
+      endX: null,
+      isSwipe: null,
+      dragging: false,
     }
   },
 
   methods:{
     pointerdown(e){
-      this.wasSwipe = false;
-      this.pressedAt = e.clientX??e.pageX;
-      console.log("pressed", e.pageX);
+      this.isSwipe = false;
+      this.dragging = true;
+      this.startX = e.clientX??e.pageX;
       e.currentTarget.classList.add("pressed");
+      console.log("pressed", e.pageX);
+      
+
     },
     pointerup(e){
-      this.releasedAt = e.clientX??e.pageX;
-      const dx = Math.abs(this.releasedAt -this.pressedAt);
+      this.endX = e.clientX??e.pageX;
+      const dx = Math.abs(this.endX-this.startX);
       if(dx>this.SWIPE_THRESHOLD){
-        this.wasSwipe = true;
+        this.isSwipe = true;
         console.log("event canceled!");
       } else {
-        this.wasSwipe = false;
+        this.isSwipe = false;
         console.log("event triggered!");
       }
       e.currentTarget.classList.remove("pressed"); 
@@ -196,10 +201,10 @@ export default {
     }
     .right {text-align: left;}
     .xpSwiperSlide{
-      transition: scale 90ms ease !important;
+      transition: scale 150ms ease !important;
       will-change: scale;
     }
-    .xpSwiperSlide.pressed{scale: 0.95;}
+    .xpSwiperSlide.pressed{scale: 0.98;}
   }
 
   @media (min-width: #{map-get($breakpoints, small)}){
