@@ -48,21 +48,25 @@
             class="xpSwiperSlide"
             v-if="visibleGrid==='Education'"
             v-for="(education, index) in educations"
-            :key="index">
-              <ExperienceColumn
-                class="col-12 col-md right"
-                v-if="education.isVisible == true"
-                :name="education.title"
-                :content="education.description"
-                :date="education.year"
-                :src="education.logoUrl"
-                />
+            :key="index"
+              @pointerdown = "pointerdown"
+              @pointerup = "pointerup">
+            <ExperienceColumn
+              class="col-12 col-md right"
+              v-if="education.isVisible == true"
+              :name="education.title"
+              :content="education.description"
+              :date="education.year"
+              :src="education.logoUrl"
+              />
           </swiper-slide>
           <swiper-slide
               class="xpSwiperSlide"
               v-if="visibleGrid === 'Professional'"
               v-for="(repo, index) in repos"
-              :key="index">
+              :key="index"
+              @pointerdown = "pointerdown"
+              @pointerup = "pointerup">
             <ExperienceColumn
               class="col-12 col-md right"
               :name="repo.name.replace(/-/g, ' ')"
@@ -91,8 +95,6 @@ import 'swiper/css/effect-flip';
 import 'swiper/css/navigation';
 import { Navigation, EffectCoverflow, Pagination, Mousewheel, EffectFlip,  } from 'swiper/modules';
 
-
-
 export default {
   name: "Experience",
 
@@ -116,8 +118,35 @@ export default {
       title:"Experience",
       grids:["Professional", "Education"],
       visibleGrid:"Professional",
+      SWIPE_THRESHOLD: 10,
+      pressedAt: null,
+      releasedAt: null,
+      wasSwipe: null
     }
   },
+
+  methods:{
+    pointerdown(e){
+      this.wasSwipe = false;
+      this.pressedAt = e.clientX??e.pageX;
+      console.log("pressed", e.pageX);
+      e.currentTarget.classList.add("pressed");
+    },
+    pointerup(e){
+      this.releasedAt = e.clientX??e.pageX;
+      const dx = Math.abs(this.releasedAt -this.pressedAt);
+      if(dx>this.SWIPE_THRESHOLD){
+        this.wasSwipe = true;
+        console.log("event canceled!");
+      } else {
+        this.wasSwipe = false;
+        console.log("event triggered!");
+      }
+      e.currentTarget.classList.remove("pressed"); 
+      console.log("released", e.pageX);
+    },
+  }
+
 };
 </script>
 
@@ -165,15 +194,16 @@ export default {
       text-align: right;
       border-right: 2px solid $linear;
     }
-    .right {
-      text-align: left;
+    .right {text-align: left;}
+    .xpSwiperSlide{
+      transition: scale 90ms ease !important;
+      will-change: scale;
     }
+    .xpSwiperSlide.pressed{scale: 0.95;}
   }
 
   @media (min-width: #{map-get($breakpoints, small)}){
-    .right {
-      margin-top: 20px;
-    }
+    .right {margin-top: 20px;}
     .left:before {
       content : "";
       position: absolute;
@@ -183,32 +213,21 @@ export default {
       width   : 60%;  /* or 100px */
       border-bottom:2px solid $linear;
     }
-    .xpSwitcher {
-      --swiper-navigation-sides-offset: 30%;
-    }
+    .xpSwitcher {--swiper-navigation-sides-offset: 30%;}
   }
     @media (max-width: #{map-get($breakpoints, medium)}) {
       .xpSwiperSlide{justify-items: center;}
-      .xpSwitcher {
-        --swiper-navigation-sides-offset: 25%;
-      }
+      .xpSwitcher {--swiper-navigation-sides-offset: 25%;}
     }
     @media (min-width: #{map-get($breakpoints, medium)}) {
       .xpSwiperSlide{justify-items: center; margin-bottom: 1.5rem;}
-      .xpSwitcher {
-        --swiper-navigation-sides-offset: 40%;
-      }
+      .xpSwitcher {--swiper-navigation-sides-offset: 40%;}
     }    
     @media (min-width: #{map-get($breakpoints, large)}) {
-      .xpSwitcher {
-        --swiper-navigation-sides-offset: 43%;
-      }
+      .xpSwitcher {--swiper-navigation-sides-offset: 43%;}
     }  
 
   .text-wrapper {
-    &:after {
-      border-bottom: 1px solid map-get($colors, dark);
-    }
-
+    &:after {border-bottom: 1px solid map-get($colors, dark);}
   }
 </style>
