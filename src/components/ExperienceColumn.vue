@@ -9,7 +9,9 @@
       </b-col>
       <b-col md="6" class="xp-card__body d-flex flex-column h-100 text-start" style="padding: 0.5rem;">
         <b-card-body id="body">
-          <h3 class="color-light color-darker xp-card__name" :id="name">{{ name }}</h3>
+          <a :href="url" target="_blank">
+            <h3 class="color-light color-darker xp-card__name" :id="name">{{ name }}</h3>
+          </a>
             <b-card-text class="d-flex flex-column flex-grow-1 min-h-0">
                 <p v-html="content" class=" xp-card__desc secondary "></p>
             </b-card-text>
@@ -142,5 +144,12 @@
 .year {
   font-weight: 600;
   margin-bottom: 1.75rem;
+}
+
+a{
+  text-decoration: none;
+}
+a:hover{
+  text-decoration: underline;
 }
 </style>
