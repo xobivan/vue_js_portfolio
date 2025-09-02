@@ -16,10 +16,10 @@
                 <p v-html="content" class=" xp-card__desc secondary "></p>
             </b-card-text>
         </b-card-body>
-        <span class = "year align-text-bottom" v-html="date"/>
+        <span class = "year" v-html="date"/>
       </b-col>
     </b-row>
-  </b-card>>
+  </b-card>
 </template>
 
 <script>
@@ -34,7 +34,19 @@
       owner: {type: String, required: true,},
       src: {type: String, required: false, default: ''},
       alt: {type: String, required: false, default: ''},
+
+      //for mobile view
+      isMobileDescriptionVisible: {type: Boolean, required: true},
+      index: { type: Number, required: true},
+      activeIndex: { type: Number, required: true}
     },
+
+    watch:{
+      isMobileDescriptionVisible(newVal, oldVal){
+        if(this.index!=this.activeIndex){return}
+        console.log(`isMobileDescriptionVisible value has changed from ${oldVal} to ${newVal}`)
+      }
+    }
     
   };
 </script>

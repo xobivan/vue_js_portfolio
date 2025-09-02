@@ -24,6 +24,7 @@
 
         <!-- main slider -->
         <swiper
+          @slideChange="onSlideChange"
           :preventClicks="false"
           :preventClicksPropagation = "false"
           :effect="'coverflow'"
@@ -63,6 +64,9 @@
                 :content="education.description"
                 :date="education.year"
                 :src="education.logoUrl"
+                :is-mobile-description-visible="isMoblieDescriptionVisible"
+                :index="index"
+                :active-index="activeIndex"
               />
             </div>
           </swiper-slide>
@@ -107,7 +111,6 @@ import "swiper/css/pagination";
 import "swiper/css/effect-flip";
 import "swiper/css/navigation";
 import { Navigation, EffectCoverflow, Pagination, Mousewheel, EffectFlip } from "swiper/modules";
-
 export default {
   name: "Experience",
   props: {
@@ -128,9 +131,11 @@ export default {
       THRESHOLD: 10,
       startX: 0,
       startY: 0,
+      isMoblieDescriptionVisible: false,
       isPressed: false,
       isSwipe: false,
       pointerId: null,
+      activeIndex: 0
     };
   },
   methods: {
@@ -173,6 +178,7 @@ export default {
 
       if (!this.isSwipe) {
         console.log("tap: event triggered!");
+        this.isMoblieDescriptionVisible = !this.isMoblieDescriptionVisible;
       } else {
         console.log("swipe: event canceled");
       }
@@ -188,6 +194,10 @@ export default {
       this.isSwipe = false;
       this.pointerId = null;
     },
+    onSlideChange(swiper){
+      this.activeIndex = swiper.activeIndex
+      this.isMoblieDescriptionVisible = false;
+    }
   },
 };
 </script>
