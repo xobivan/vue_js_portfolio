@@ -9,7 +9,6 @@ import 'vuetify/styles';
 import '@mdi/font/css/materialdesignicons.css'; 
 
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue-3/dist/bootstrap-vue-3.css';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCopyright } from '@fortawesome/free-solid-svg-icons';

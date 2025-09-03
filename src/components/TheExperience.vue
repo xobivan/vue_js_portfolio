@@ -189,15 +189,18 @@ export default {
     },
 
     onCancel(e) {
+ 
       e.currentTarget.classList.remove("pressed");
       this.isPressed = false;
       this.isSwipe = false;
       this.pointerId = null;
     },
     onSlideChange(swiper){
+
       this.activeIndex = swiper.activeIndex
       this.isMoblieDescriptionVisible = false;
-    }
+    },
+
   },
 };
 </script>

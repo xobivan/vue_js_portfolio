@@ -2,28 +2,41 @@
   <b-card 
       tag="article"
       class="xp-card container overflow-hidden"
-      id="card">  
+      id="card"
+      :class="{ open: deviceWidth<=767 && visible }">  
     <b-row no-gutters class="h-100">
       <b-col md="6">
-        <b-card-img :src="src" :alt="alt || name" class="xp-card__image rounded-3"/>     
+        <b-card-img :src="src" :alt="alt || name" class="xp-card__image rounded-3" id="img"/>     
       </b-col>
-      <b-col md="6" class="xp-card__body d-flex flex-column h-100 text-start" style="padding: 0.5rem;">
+      <b-col md="6" class="xp-card__body d-flex flex-column  h-100 text-start">
+        <b-row no-gutters class="h-100">
+            <b-collapse visible>
+              <a :href="url" target="_blank">
+                <h3 class="color-light color-darker xp-card__name" :id="name">{{ name }}</h3>
+              </a>
+            </b-collapse>
+        </b-row>
+        <b-row no-gutters class="h-100">
         <b-card-body id="body">
-          <a :href="url" target="_blank">
-            <h3 class="color-light color-darker xp-card__name" :id="name">{{ name }}</h3>
-          </a>
-            <b-card-text class="d-flex flex-column flex-grow-1 min-h-0">
+            <b-collapse v-if="deviceWidth<=767" v-model="visible" class="my-collapse" :style="{ '--block-height': blockHeight + 'px' }">
+              <b-card-text>
+                  <p v-html="content" class=" xp-card__desc secondary"></p>
+              </b-card-text>
+            </b-collapse>
+            <b-card-text v-else class="d-flex flex-column flex-grow-1 min-h-0">
                 <p v-html="content" class=" xp-card__desc secondary "></p>
             </b-card-text>
-        </b-card-body>
-        <span class = "year" v-html="date"/>
+          </b-card-body>
+        </b-row>
+        <b-row no-gutters class="h-100">
+          <span class = "year" v-html="date"/>
+        </b-row>
       </b-col>
     </b-row>
   </b-card>
 </template>
 
 <script>
-/* src="https://repository-images.githubusercontent.com/900526062/c746b943-a751-4d4e-bb54-5a68082d346c" */
   export default {
     name: "ExperienceColumn",
     props: {
@@ -40,14 +53,19 @@
       index: { type: Number, required: true},
       activeIndex: { type: Number, required: true}
     },
-
+    data(){
+      return{
+        visible: false,
+        deviceWidth: window.innerWidth,
+      }
+    },
     watch:{
       isMobileDescriptionVisible(newVal, oldVal){
         if(this.index!=this.activeIndex){return}
-        console.log(`isMobileDescriptionVisible value has changed from ${oldVal} to ${newVal}`)
-      }
-    }
-    
+        console.log(`isMobileDescriptionVisible value has changed from ${oldVal} to ${newVal}`);
+        this.visible = newVal;
+      },
+    },
   };
 </script>
 
@@ -55,19 +73,44 @@
 @import "@/styles/constants.scss";
 
 @media(max-width: #{map-get($breakpoints, small)}){
-  .xp-card__desc{display: none !important;}
-  .xp-card{
-    height: 100% !important;
-    padding-right: 1.1rem !important;
+  .my-collapse {
+    --collapse-duration: 240ms;
+    transition: height var(--collapse-duration) ease;
+    transition-duration: var(--collapse-duration);
+    will-change: height;
   }
+
+  .xp-card .h-100 { height: auto !important; }
+
+  .xp-card {
+    --img-closed: 500px;  /* подгони под макет */
+    --img-open:   445px;  /* подгони под макет */
+  }
+
+    /* сама картинка — плавно меняем max-height */
+  .xp-card__image {
+    width: 100%;
+    height: auto;                 /* важно: не 100% */
+    max-height: var(--img-closed);
+    object-fit:cover;          /* без обрезки; хочешь кроп — оставь cover */
+    transition: max-height 240ms ease;
+  }
+  .xp-card.open .xp-card__image {
+    max-height: var(--img-open);
+  }
+
   .xp-card__body{
+    position: relative;
     padding-left: 0 !important;
   }
   .xp-card__name{
     margin-bottom: 2rem;
+    margin-left: 0!important;
   }
   .year{
+    position: relative!important;
     margin-left: 0rem !important;
+    margin-bottom: 0 !important;
   }
   #body{
     padding-left: 0;
@@ -85,7 +128,7 @@
     padding-top: 2rem !important;
     padding-bottom: 1.5rem !important;
     margin:0 !important;
-    height: 100% !important;
+    /* height: 100% !important; */
   }
 }
 
@@ -97,7 +140,6 @@
     margin-left: 1rem;
   }
 }
-
 
 .color-light {
   color: map-get($colors, light);
@@ -114,21 +156,23 @@
 
 .xp-card {
   width: 100%;
-  max-width: 520px;
-  height: 360px;
-  margin: 0.5rem;
+  max-width: 100%;
+  height: 100%;;
   display: flex;
 }
 .h-100 { height: 100%; }     
 .min-h-0 { min-height: 0; }
 
+.xp-card__name{
+  margin-bottom: 0;
+  margin-left: 1rem;
+}
 
 .xp-card__image {
   width: 100%;
   height: 100%;
   object-fit: cover; 
-  margin-top: 1.75rem; 
-  padding-bottom: 3rem;
+  margin-top: 0rem; 
 }
 
 .xp-card__body {
@@ -141,7 +185,7 @@
 }
 .xp-card__desc {
   margin: 0;
-  font-size: 2rem;
+  font-size: 1.7rem;
   line-height: 1.45;
   overflow: hidden;
 
@@ -149,13 +193,16 @@
   -webkit-box-orient: vertical;
   line-clamp: 5;
   text-overflow: ellipsis;
-
   flex-grow: 1;
+}
+h3{
+  line-height: 1.7rem;
 }
 
 .year {
+  position: absolute;
+  margin-bottom: 0.5rem;
   font-weight: 600;
-  margin-bottom: 1.75rem;
 }
 
 a{
