@@ -90,7 +90,7 @@
     /* сама картинка — плавно меняем max-height */
   .xp-card__image {
     width: 100%;
-    height: auto;                 /* важно: не 100% */
+    height: auto !important;                 /* важно: не 100% */
     max-height: var(--img-closed);
     object-fit:cover;          /* без обрезки; хочешь кроп — оставь cover */
     transition: max-height 240ms ease;
