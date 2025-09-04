@@ -1,9 +1,11 @@
 <template>
-  <b-card 
+  <b-card
+      @touchstart="isPressed = true"
+      @touchend="isPressed = false"
       tag="article"
       class="xp-card container overflow-hidden"
       id="card"
-      :class="{ open: deviceWidth<=767 && visible }"
+      :class="{ open: deviceWidth<=767 && visible, pressed: isPressed }"
       :style="{
         '--block-height': blockHeight + 'px',
         '--img-open': imgOpenPx + 'px',
@@ -26,7 +28,7 @@
         </b-row>
         <b-row no-gutters class="h-100">
         <b-card-body id="body">
-            <b-collapse v-if="deviceWidth<=767" v-model="visible" class="my-collapse" @shown="measure" @hidden="measure">
+            <b-collapse v-if="deviceWidth<=767" class="my-collapse" v-model="visible" @shown="measure" @hidden="measure">
               <b-card-text>
                   <p ref="cardText" v-html="content" class=" xp-card__desc secondary" id="description"></p>
               </b-card-text>
@@ -51,8 +53,8 @@
       name: {type: String, required: true},
       content: {type: String, required: true},
       date: {type: String, required: false,},
-      url:{type: String, required: true,},
-      owner: {type: String, required: true,},
+      url:{type: String,},
+      owner: {type: String,},
       src: {type: String, required: false, default: ''},
       alt: {type: String, required: false, default: ''},
 
@@ -67,6 +69,7 @@
         deviceWidth: window.innerWidth,
         blockHeight: 0,
         imgClosed: 0,
+        isPressed: false,
       }
     },
     computed: {
@@ -132,16 +135,13 @@
           if (h) this.imgClosed = Math.round(h);
         }
       },
-      onResize() {
-        this.deviceWidth = window.innerWidth;
-        this.measure();
-      },
     },
     watch:{
       isMobileDescriptionVisible(newVal, oldVal){
         if(this.index!=this.activeIndex){return}
         console.log(`isMobileDescriptionVisible value has changed from ${oldVal} to ${newVal}`);
         this.visible = newVal;
+        console.log(document.querySelector(".collapsing"))
       },
       visible(val) {
         if (val) this.measure();
@@ -160,21 +160,21 @@
 @import "@/styles/constants.scss";
 
 @media(max-width: #{map-get($breakpoints, small)}){
-  .my-collapse {
-    --collapse-duration: 240ms;
-    transition: height var(--collapse-duration) ease;
-    will-change: height;
+  .my-collapse{
+    --collapse-duration: 200ms;
+    max-height: var(--block-height);
+    transition: max-height var(--collapse-duration) ease;
   }
-
-  .xp-card .h-100 { height: auto !important; }
-
+/*   .xp-card.pressed{
+    box-shadow: 10px 5px 5px map-get($colors, secondary);
+  } */
   .xp-card__image {
     /* display: block; */
     width: 100%;
     height: auto !important; 
     max-height: var(--img-closed);
     object-fit:cover;         
-    transition: max-height 240ms ease;
+    transition: max-height 200ms ease;
   }
   .xp-card.open .xp-card__image {
     max-height: var(--img-open);
@@ -238,8 +238,9 @@
 .xp-card {
   width: 100%;
   max-width: 100%;
-  height: 100%;;
+  height: 100%;
   display: flex;
+  
 }
 .h-100 { height: 100%; }     
 .min-h-0 { min-height: 0; }

@@ -6,7 +6,7 @@
 <template>
   <div class="paragraph">
     <h3>LET ME INTRODUCE MYSELF</h3>
-    <div v-if="bioText" class="begin">{{ bioText.bio }}</div>
+    <div v-if="bioText" class="about begin">{{ bioText.bio }}</div>
     <div v-else>Failed to load description</div>
   </div>
 </template>
@@ -19,9 +19,10 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/constants.scss";
-
 .paragraph {
   color: map-get($colors, primary);
+  text-align: left;
+  padding-left: 1rem;
   .begin {
     color: map-get($colors, secondary);
   }

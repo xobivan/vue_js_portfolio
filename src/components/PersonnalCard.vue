@@ -27,4 +27,10 @@
           float: right;
         }
     }
+    @media(max-width: #{map-get($breakpoints, small)}){
+      .personal{
+        text-align: left !important;
+        padding: 1rem
+      }
+    }
 </style>

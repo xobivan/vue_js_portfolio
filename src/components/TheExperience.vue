@@ -1,7 +1,7 @@
 <template>
   <section id="experience">
     <AnimateOnVisible name="fadeDown" :duration="1">
-      <Title class="title" :title="title" />
+      <Title class="title" :title="title" :description="description"/>
     </AnimateOnVisible>
 
     <div class="container-fluid">
@@ -16,11 +16,13 @@
           :flipEffect="{ slideShadows: false }"
           :modules="modules"
           class="xpSwitcher"
+          id="xpSwitcher"
         >
           <swiper-slide v-for="(grid, index) in grids" :key="index" class="xpSwitcher-slide">
             <Title id="visibleGrid" class="container px-4 text-center" :description="grid" />
           </swiper-slide>
         </swiper>
+        
 
         <!-- main slider -->
         <swiper
@@ -35,8 +37,8 @@
           :centeredSlides="true"
           :coverflowEffect="{ rotate: 50, stretch: 0, depth: 100, modifier: 1, slideShadows: false }"
           :breakpoints="{
-            430: { slidesPerView: 1 },
-            768: { slidesPerView: 1 },
+            430: { slidesPerView: 1},
+            768: { slidesPerView: 1},
             1024:{ slidesPerView: 1 },
             1200:{ slidesPerView: 2, pagination: false },
             1500:{ slidesPerView: 3, pagination: false },
@@ -44,6 +46,7 @@
           :modules="modules"
           style="max-width: max-content; width: 75%; height: 100%;"
           class="mySwiper"
+          id="mySwiper"
         >
           <!-- Education -->
           <swiper-slide
@@ -99,6 +102,7 @@
             </div>
           </swiper-slide>
         </swiper>
+        
       </div>
     </div>
   </section>
@@ -108,6 +112,7 @@
 import Title from "./Title.vue";
 import ExperienceColumn from "./ExperienceColumn.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
+
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
@@ -127,8 +132,11 @@ export default {
   data() {
     return {
       title: "Experience",
+      description: "Projects and Education",
       grids: ["Projects", "Education"],
       visibleGrid: "Projects",
+      showTip: true,
+      deviceWidth: window.innerWidth,
 
       // for events
       THRESHOLD: 10,
@@ -203,7 +211,6 @@ export default {
       this.activeIndex = swiper.activeIndex
       this.isMoblieDescriptionVisible = false;
     },
-
   },
 };
 </script>
@@ -263,14 +270,14 @@ $linear: map-get($colors, dark);
   }
   .xpSwiperSlide .pressable {
     transform: scale(1);
-    transition: transform 180ms ease;
+    transition: transform 90ms ease;
     will-change: transform;
     transform-origin: center;
   }
   .xpSwiperSlide.pressed .pressable {
-    transform: scale(0.95);
+    transform: scale(0.96);
+    box-shadow: 10px 5px 5px map-get($colors, secondary);
   }
-
 }
 
 @media (min-width: #{map-get($breakpoints, small)}) {
