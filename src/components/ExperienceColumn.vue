@@ -6,10 +6,17 @@
       :class="{ open: deviceWidth<=767 && visible }"
       :style="{
         '--block-height': blockHeight + 'px',
-        '--img-open': imgOpenPx + 'px'}">  
+        '--img-open': imgOpenPx + 'px',
+        '--img-closed':  imgClosed  + 'px'}">  
     <b-row no-gutters class="h-100">
       <b-col md="6">
-        <b-card-img :src="src" :alt="alt || name" class="xp-card__image rounded-3" id="img"/>     
+        <b-card-img 
+        :src="src" 
+        :alt="alt || name"
+        :id="`img-${index}`"   
+        class="xp-card__image rounded-3" 
+        id="img"
+        ref="imgRef"/>
       </b-col>
       <b-col md="6" class="xp-card__body d-flex flex-column  h-100 text-start">
         <b-row no-gutters class="h-100">
@@ -21,7 +28,7 @@
         <b-card-body id="body">
             <b-collapse v-if="deviceWidth<=767" v-model="visible" class="my-collapse" @shown="measure" @hidden="measure">
               <b-card-text>
-                  <p  ref="cardText" v-html="content" class=" xp-card__desc secondary" id="description"></p>
+                  <p ref="cardText" v-html="content" class=" xp-card__desc secondary" id="description"></p>
               </b-card-text>
             </b-collapse>
             <b-card-text v-else class="d-flex flex-column flex-grow-1 min-h-0">
@@ -59,38 +66,71 @@
         visible: false,
         deviceWidth: window.innerWidth,
         blockHeight: 0,
-        imgClosed: 500,
+        imgClosed: 0,
       }
     },
     computed: {
       imgOpenPx() {
-        // нижний предел, чтобы не уходить в отрицательные значения
         return Math.max(0, this.imgClosed - this.blockHeight);
       }
     },
     mounted() {
-      // если уже открыто или нужно посчитать сразу
       this.measure();
+      this.measureImgClosed();
+
       window.addEventListener('resize', this.onResize, { passive: true });
       window.addEventListener('orientationchange', this.onResize, { passive: true });
+
+      const imgEl = this.getImgEl();
+      if (imgEl && !imgEl.complete) {
+        imgEl.addEventListener('load', this.measureImgClosed, { once: true });
+      };
+
+      this._roImg = new ResizeObserver(this.measureImgClosed);
+      if (imgEl) this._roImg.observe(imgEl);
     },
-    beforeUnmount() { // Vue 2 (Vue 3: beforeUnmount)
+    beforeUnmount() {
       window.removeEventListener('resize', this.onResize);
       window.removeEventListener('orientationchange', this.onResize);
+      const imgEl = this.getImgEl();
+      if (this._roImg && imgEl) this._roImg.unobserve(imgEl);
     },
     methods: {
       onResize() {
         this.deviceWidth = window.innerWidth;
         this.measure();
+        this.measureImgClosed();
       },
       measure() {
         this.$nextTick(() => {
-          const el = this.$refs.cardText; // это уже <p>, реальный DOM
+          const el = this.$refs.cardText;
           if (el) {
-            this.blockHeight = el.scrollHeight; // или offsetHeight — что нужно
+            this.blockHeight = el.scrollHeight;
             console.log('blockHeight:', this.blockHeight);
           }
         });
+      },
+      getImgEl() {
+        const r = this.$refs.imgRef;
+        // b-card-img рендерит <img>, у разных билдов доступ через $el или напрямую
+        return r && (r.$el || r);
+      },
+      measureImgClosed() {
+        const el = this.getImgEl();
+        if (!el) return;
+
+        const natW = el.naturalWidth || 0;
+        const natH = el.naturalHeight || 0;
+        const w = el.clientWidth || el.offsetWidth || 0;
+
+        if (natW && natH && w) {
+          // базовая «закрытая» высота по реальному AR
+          this.imgClosed = Math.round(w * (natH / natW));
+        } else {
+          // фолбэк: возьмём текущую видимую высоту
+          const h = el.getBoundingClientRect().height;
+          if (h) this.imgClosed = Math.round(h);
+        }
       },
       onResize() {
         this.deviceWidth = window.innerWidth;
@@ -109,6 +149,9 @@
       content() {
         this.measure();
       },
+      src() {
+        this.$nextTick(this.measureImgClosed);
+      }
     },
   };
 </script>
@@ -120,18 +163,13 @@
   .my-collapse {
     --collapse-duration: 240ms;
     transition: height var(--collapse-duration) ease;
-    transition-duration: var(--collapse-duration);
     will-change: height;
   }
 
   .xp-card .h-100 { height: auto !important; }
 
-  .xp-card {
-    --img-closed: 500px;
-  }
-
   .xp-card__image {
-    display: block;
+    /* display: block; */
     width: 100%;
     height: auto !important; 
     max-height: var(--img-closed);

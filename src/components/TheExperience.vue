@@ -8,7 +8,7 @@
       <div class="row">
         <!-- toggle grids Professional/Education -->
         <swiper
-          @slideChange="() => { visibleGrid === 'Professional' ? visibleGrid = 'Education' : visibleGrid = 'Professional' }"
+          @slideChange="() => { visibleGrid === 'Projects' ? visibleGrid = 'Education' : visibleGrid = 'Projects' }"
           :effect="'flip'"
           :navigation="true"
           :grabCursor="true"
@@ -73,7 +73,7 @@
 
           <!-- Professional -->
           <swiper-slide
-            v-if="visibleGrid === 'Professional'"
+            v-if="visibleGrid === 'Projects'"
             v-for="(repo, index) in repos"
             :key="`repo-${index}`"
             class="xpSwiperSlide"
@@ -127,8 +127,8 @@ export default {
   data() {
     return {
       title: "Experience",
-      grids: ["Professional", "Education"],
-      visibleGrid: "Professional",
+      grids: ["Projects", "Education"],
+      visibleGrid: "Projects",
 
       // for events
       THRESHOLD: 10,
@@ -268,7 +268,7 @@ $linear: map-get($colors, dark);
     transform-origin: center;
   }
   .xpSwiperSlide.pressed .pressable {
-    transform: scale(0.98);
+    transform: scale(0.95);
   }
 
 }
