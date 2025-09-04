@@ -3,24 +3,23 @@
       tag="article"
       class="xp-card container overflow-hidden"
       id="card"
-      :class="{ open: deviceWidth<=767 && visible }">  
+      :class="{ open: deviceWidth<=767 && visible }"
+      :style="{ '--block-height': blockHeight + 'px' }">  
     <b-row no-gutters class="h-100">
       <b-col md="6">
         <b-card-img :src="src" :alt="alt || name" class="xp-card__image rounded-3" id="img"/>     
       </b-col>
       <b-col md="6" class="xp-card__body d-flex flex-column  h-100 text-start">
         <b-row no-gutters class="h-100">
-            <b-collapse visible>
-              <a :href="url" target="_blank">
-                <h3 class="color-light color-darker xp-card__name" :id="name">{{ name }}</h3>
-              </a>
-            </b-collapse>
+          <a :href="url" target="_blank">
+            <h3 class="color-light color-darker xp-card__name" :id="name">{{ name }}</h3>
+          </a>
         </b-row>
         <b-row no-gutters class="h-100">
         <b-card-body id="body">
-            <b-collapse v-if="deviceWidth<=767" v-model="visible" class="my-collapse" :style="{ '--block-height': blockHeight + 'px' }">
+            <b-collapse v-if="deviceWidth<=767" v-model="visible" class="my-collapse">
               <b-card-text>
-                  <p v-html="content" class=" xp-card__desc secondary"></p>
+                  <p  ref="cardText" v-html="content" class=" xp-card__desc secondary" id="description"></p>
               </b-card-text>
             </b-collapse>
             <b-card-text v-else class="d-flex flex-column flex-grow-1 min-h-0">
@@ -57,6 +56,26 @@
       return{
         visible: false,
         deviceWidth: window.innerWidth,
+        blockHeight: 0,
+      }
+    },
+    mounted() {
+      // если уже открыто или нужно посчитать сразу
+      this.measure();
+      window.addEventListener('resize', this.measure);
+    },
+    beforeMount() { // Vue 2 (Vue 3: beforeUnmount)
+      window.removeEventListener('resize', this.measure);
+    },
+    methods: {
+      measure() {
+        this.$nextTick(() => {
+          const el = this.$refs.cardText; // это уже <p>, реальный DOM
+          if (el) {
+            this.blockHeight = el.scrollHeight; // или offsetHeight — что нужно
+            console.log('blockHeight:', this.blockHeight);
+          }
+        });
       }
     },
     watch:{
@@ -64,6 +83,12 @@
         if(this.index!=this.activeIndex){return}
         console.log(`isMobileDescriptionVisible value has changed from ${oldVal} to ${newVal}`);
         this.visible = newVal;
+      },
+      visible(val) {
+        if (val) this.measure();
+      },
+      content() {
+        this.measure();
       },
     },
   };
@@ -83,16 +108,15 @@
   .xp-card .h-100 { height: auto !important; }
 
   .xp-card {
-    --img-closed: 500px;  /* подгони под макет */
-    --img-open:   445px;  /* подгони под макет */
+    --img-closed: 500px; 
+    --img-open:  calc(var(--img-closed) - var(--block-height));  
   }
 
-    /* сама картинка — плавно меняем max-height */
   .xp-card__image {
     width: 100%;
-    height: auto !important;                 /* важно: не 100% */
+    height: auto !important; 
     max-height: var(--img-closed);
-    object-fit:cover;          /* без обрезки; хочешь кроп — оставь cover */
+    object-fit:cover;         
     transition: max-height 240ms ease;
   }
   .xp-card.open .xp-card__image {
