@@ -92,6 +92,9 @@
                 :owner="repo.owner.login"
                 :src="repo.socialPreview"
                 :alt="repo.name"
+                :is-mobile-description-visible="isMoblieDescriptionVisible"
+                :index="index"
+                :active-index="activeIndex"
               />
             </div>
           </swiper-slide>

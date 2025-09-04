@@ -4,7 +4,9 @@
       class="xp-card container overflow-hidden"
       id="card"
       :class="{ open: deviceWidth<=767 && visible }"
-      :style="{ '--block-height': blockHeight + 'px' }">  
+      :style="{
+        '--block-height': blockHeight + 'px',
+        '--img-open': imgOpenPx + 'px'}">  
     <b-row no-gutters class="h-100">
       <b-col md="6">
         <b-card-img :src="src" :alt="alt || name" class="xp-card__image rounded-3" id="img"/>     
@@ -57,17 +59,32 @@
         visible: false,
         deviceWidth: window.innerWidth,
         blockHeight: 0,
+        imgClosed: 500,
+      }
+    },
+    computed: {
+      imgOpenPx() {
+        // нижний предел, чтобы не уходить в отрицательные значения
+        return Math.max(0, this.imgClosed - this.blockHeight);
       }
     },
     mounted() {
       // если уже открыто или нужно посчитать сразу
       this.measure();
       window.addEventListener('resize', this.measure);
+      window.addEventListener('resize', this.onResize, { passive: true });
+      window.addEventListener('orientationchange', this.onResize, { passive: true });
     },
-    beforeMount() { // Vue 2 (Vue 3: beforeUnmount)
+    beforeUnmount() { // Vue 2 (Vue 3: beforeUnmount)
       window.removeEventListener('resize', this.measure);
+      window.removeEventListener('resize', this.onResize);
+      window.removeEventListener('orientationchange', this.onResize);
     },
     methods: {
+      onResize() {
+        this.deviceWidth = window.innerWidth;
+        this.measure();
+      },
       measure() {
         this.$nextTick(() => {
           const el = this.$refs.cardText; // это уже <p>, реальный DOM
@@ -76,7 +93,11 @@
             console.log('blockHeight:', this.blockHeight);
           }
         });
-      }
+      },
+      onResize() {
+        this.deviceWidth = window.innerWidth;
+        this.measure();
+      },
     },
     watch:{
       isMobileDescriptionVisible(newVal, oldVal){
@@ -108,8 +129,7 @@
   .xp-card .h-100 { height: auto !important; }
 
   .xp-card {
-    --img-closed: 500px; 
-    --img-open:  calc(var(--img-closed) - var(--block-height));  
+    --img-closed: 500px;
   }
 
   .xp-card__image {
@@ -118,6 +138,7 @@
     max-height: var(--img-closed);
     object-fit:cover;         
     transition: max-height 240ms ease;
+    display: block;
   }
   .xp-card.open .xp-card__image {
     max-height: var(--img-open);
