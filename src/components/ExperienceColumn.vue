@@ -19,7 +19,7 @@
         </b-row>
         <b-row no-gutters class="h-100">
         <b-card-body id="body">
-            <b-collapse v-if="deviceWidth<=767" v-model="visible" class="my-collapse">
+            <b-collapse v-if="deviceWidth<=767" v-model="visible" class="my-collapse" @shown="measure" @hidden="measure">
               <b-card-text>
                   <p  ref="cardText" v-html="content" class=" xp-card__desc secondary" id="description"></p>
               </b-card-text>
@@ -71,12 +71,10 @@
     mounted() {
       // если уже открыто или нужно посчитать сразу
       this.measure();
-      window.addEventListener('resize', this.measure);
       window.addEventListener('resize', this.onResize, { passive: true });
       window.addEventListener('orientationchange', this.onResize, { passive: true });
     },
     beforeUnmount() { // Vue 2 (Vue 3: beforeUnmount)
-      window.removeEventListener('resize', this.measure);
       window.removeEventListener('resize', this.onResize);
       window.removeEventListener('orientationchange', this.onResize);
     },
@@ -133,12 +131,12 @@
   }
 
   .xp-card__image {
+    display: block;
     width: 100%;
     height: auto !important; 
     max-height: var(--img-closed);
     object-fit:cover;         
     transition: max-height 240ms ease;
-    display: block;
   }
   .xp-card.open .xp-card__image {
     max-height: var(--img-open);
