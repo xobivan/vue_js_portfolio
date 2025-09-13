@@ -3,8 +3,6 @@ name: Build OG Map + Deploy to Firebase
 on:
   push:
     branches: [ main ]   # или master, если у тебя ветка master
-  schedule:
-    - cron: "0 3 * * *"  # запуск каждый день в 03:00 UTC
   workflow_dispatch:      # запуск вручную из Actions
 
 jobs:
