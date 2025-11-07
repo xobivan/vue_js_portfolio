@@ -1,5 +1,4 @@
-# Created by https://www.toptal.com/developers/gitignore/api/windows,visualstudio,vuejs,vue,firebase
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,visualstudio,vuejs,vue,firebase
+
 
 ### Firebase ###
 .idea
