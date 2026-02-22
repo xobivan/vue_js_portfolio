@@ -2,14 +2,14 @@ name: Build OG Map + Deploy to Firebase
 
 on:
   push:
-    branches: [ main ]   # или master, если у тебя ветка master
-  workflow_dispatch:      # запуск вручную из Actions
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: write     # нужно, чтобы коммитить og-map.json
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -23,9 +23,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # 2. Установка зависимостей и сборка Vue-проекта
+      # 2. Установка зависимостей
       - run: npm ci
-      - run: npm run build   # создаст dist/
+
+      # ✅ FIXED: сборка Vue-проекта с Firebase env
+      - name: Build Vue app
+        run: npm run build
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
 
       # 3. Деплой на Firebase Hosting
       - name: Deploy to Firebase
