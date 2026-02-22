@@ -4,7 +4,7 @@ export function useGitRepos() {
   const repos = ref([]);
 
   const fetchRepos = async () => {
-    const username = process.env.VUE_APP_GITHUB_USERNAME;
+    const username = "xobivan";
 
     try {
 

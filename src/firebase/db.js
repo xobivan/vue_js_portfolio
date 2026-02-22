@@ -10,14 +10,14 @@ import { getFirestore } from "firebase/firestore";
 
 
 const firebaseConfig = {
-  apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
-  authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.VUE_APP_FIREBASE_DATABASE_URL,
-  projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.VUE_APP_FIREBASE_APP_ID,
-  measurementId: process.env.VUE_APP_FIREBASE_MEASUREMENT_ID,
+  apiKey: "AIzaSyDCp_HLIQcAEickcFv2GARz4x9p3J_AMBg",
+  authDomain: "dmitry-spivak-portfolio.firebaseapp.com",
+  databaseURL: "https://dmitry-spivak-portfolio-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "dmitry-spivak-portfolio",
+  storageBucket: "dmitry-spivak-portfolio.appspot.com",
+  messagingSenderId: "453158869926",
+  appId: "1:453158869926:web:30507a2a0e50abc8ea0d67",
+  measurementId: "G-HR0S9B9BFR",
 };
 
 // Initialize Firebase
